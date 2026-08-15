@@ -13,7 +13,7 @@ navbar.className = `
     items-center
     justify-between
     px-[5%]
-    py-4
+    py-2
     relative
     z-50
 `;
