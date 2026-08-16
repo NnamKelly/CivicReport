@@ -1,9 +1,8 @@
 :root {
-    --primary: #1D4ED8;
+    --bg: #DBEAFE;
+    --color: #1f2937;
+    --primary: #2563eb;
     --secondary: #F59E0B;
-    --two: #ffc0cb;
-    twoo: rgb(34, 3, 3);
     --tertiary: #10B981;
     --neutral: #e4eaf1;
-    --blue: #a0e5f0ab;
 }
