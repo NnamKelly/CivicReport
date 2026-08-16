@@ -72,21 +72,21 @@ links.forEach((link) => {
         hover:text-[#1769aa]
     `;
 
-  // Check active page
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  if (currentPage === link.href) {
-    a.classList.remove("text-gray-600");
-    a.classList.add(
-      "text-[#1769aa]",
-      "after:content-['']",
-      "after:absolute",
-      "after:left-0",
-      "after:bottom-4",
-      "after:w-full",
-      "after:h-[2px]",
-      "after:bg-[#1769aa]",
-    );
-  }
+  // // Check active page
+  // const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  // if (currentPage === link.href) {
+  //   a.classList.remove("text-gray-600");
+  //   a.classList.add(
+  //     "text-[#1769aa]",
+  //     "after:content-['']",
+  //     "after:absolute",
+  //     "after:left-0",
+  //     "after:bottom-4",
+  //     "after:w-full",
+  //     "after:h-[2px]",
+  //     "after:bg-[#1769aa]",
+  //   );
+  // }
   navLinks.appendChild(a);
 });
 
@@ -152,3 +152,5 @@ navbar.appendChild(navLinks);
 navbar.appendChild(navRight);
 
 document.body.prepend(navbar);
+
+// footer
