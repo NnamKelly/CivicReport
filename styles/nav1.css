@@ -3,23 +3,20 @@
 
     body {
         display: flex;
-        min-height: 100vh;
+        min-height: 110vh;
     }
 
-    /* ===== Sidebar ===== */
     .sidebar {
-        width: 260px;
+        width: 200px;
         background-color: var(--bg);
-        height: 100vh;
         position: sticky;
         top: 0;
         padding: 24px 16px;
         display: flex;
         flex-direction: column;
-        border-right: 1px solid var(--neutral);
+        border-right: 1px solid var(--primary);
     }
 
-    /* Logo section */
     .logo-section {
         margin-bottom: 24px;
     }
@@ -27,16 +24,15 @@
     .logo {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 5px;
         margin-bottom: 4px;
         color: var(--primary);
     }
 
     .logo-icon {
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         color: var(--primary);
-        background-color: var(--neutral);
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -44,20 +40,29 @@
     }
 
     .logo-text {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         color: var(--primary);
     }
 
 
-
     .subtitle {
         font-size: 13px;
         color: var(--color);
-        padding-left: 42px;
+        padding-left: 20px;
     }
 
-    /* New Report Button */
+    .subtitle1 {
+        font-size: 16px;
+        color: var(--color);
+    }
+
+    .subtitle2 {
+        font-size: 11px;
+        color: var(--color);
+    }
+
+
     .new-report-btn {
         background-color: var(--primary);
         color: white;
@@ -79,7 +84,6 @@
         background-color: var(--primary);
     }
 
-    /* Menu */
     .menu {
         list-style: none;
         flex-grow: 1;
@@ -95,7 +99,7 @@
         gap: 12px;
         padding: 11px 14px;
         text-decoration: none;
-        color: #4b5563;
+        color: var(--color);
         border-radius: 8px;
         font-size: 15px;
     }
@@ -104,13 +108,12 @@
         background-color: #f3f4f6;
     }
 
-    /* Active (orange) link */
     .menu a.active {
         background-color: var(--secondary);
         color: black;
     }
 
-    /* Icon size */
+
     .menu a svg,
     .bottom-links a svg {
         width: 18px;
@@ -118,35 +121,45 @@
         flex-shrink: 0;
     }
 
-    /* Bottom links */
     .bottom-links {
         list-style: none;
         border-top: 1px solid var(--color);
-        padding-top: 16px;
+        padding-top: 8px;
     }
 
     .bottom-links a {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 10px 14px;
+        padding-left: 14px;
+        padding-top: 8px;
+        padding-bottom: 10px;
         text-decoration: none;
         color: var(--color);
         border-radius: 8px;
         font-size: 14px;
     }
 
+    .bottom-links button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 20px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
     .bottom-links a:hover {
         background-color: #f3f4f6;
     }
 
-    /* Main content (demo only) */
-    .main-content {
-        flex: 1;
-        padding: 30px;
-    }
-
-    /* ===== Responsive ===== */
     @media (max-width: 768px) {
         .sidebar {
             width: 100%;
