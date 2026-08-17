@@ -48,12 +48,12 @@ const links = [
   },
   {
     text: "About",
-    href: "about.html",
+    href: "../pages/signup.html",
   },
 
   {
     text: "Contact",
-    href: "contact.html",
+    href: "../pages/signup.html",
   },
 ];
 
@@ -101,7 +101,7 @@ navRight.className = `
 
 // sbtn
 const signIn = document.createElement("a");
-signIn.href = "login.html";
+signIn.href = "../pages/login.html";
 signIn.textContent = "Sign In";
 signIn.className = `
     text-[15px]
@@ -115,7 +115,7 @@ signIn.className = `
 
 // incident btn
 const reportButton = document.createElement("a");
-reportButton.href = "report.html";
+reportButton.href = "../pages/login.html";
 reportButton.className = `
     flex
     items-center
