@@ -97,6 +97,6 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   //  rest
   document.getElementById("loginForm").reset();
-  window.location.href = "dashboard.html";
+  window.location.href = "/pages/user.html";
   console.log("Logged in user:", sessionData);
 });

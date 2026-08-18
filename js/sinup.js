@@ -96,7 +96,7 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
 
   saveUser(newUser);
 
-  alert("Account created successfully! Data saved to localStorage.");
+  alert("Account created successfully!");
   // reset
   document.getElementById("signupForm").reset();
   /*strengthbar*/
@@ -106,4 +106,5 @@ document.getElementById("signupForm").addEventListener("submit", function (e) {
   document.getElementById("strengthText").textContent = "Weak";
   document.getElementById("strengthText").className =
     "text-xs text-red-500 font-medium";
+  window.location.href = "/pages/user.html";
 });
