@@ -18,7 +18,7 @@ function isValidEmail(email) {
   return re.test(email);
 }
 
-// 2. Form Submit with proper validation
+// 2. Form Submit
 document.getElementById("loginForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -35,7 +35,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   let isValid = true;
 
-  // 1. Validate Email is not empty and format is correct
+  // Validate Email
   if (emailInput === "") {
     alert("Please enter your email.");
     document.getElementById("email").classList.add("border-red-500");
@@ -46,7 +46,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     isValid = false;
   }
 
-  // 2. Validate Password
+  // Validate Password
   if (password === "") {
     alert("Please enter your password.");
     document.getElementById("password").classList.add("border-red-500");
@@ -59,27 +59,34 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
 
   if (!isValid) return;
 
-  // 3. Check if user exists in localStorage
+  // Check if user exists
   const users = getUsers();
   const user = users.find((u) => u.email === emailInput);
 
   if (!user) {
-    // No account found - flag to create account
     alert("No account found with this email. Please create an account first.");
+    // You can change this path if needed
     window.location.href = "../pages/signup.html";
     return;
   }
 
-  // 4. Check if password matches
+  // Check password
   if (user.password !== password) {
     alert("Incorrect password. Please try again.");
     document.getElementById("password").classList.add("border-red-500");
     return;
   }
 
-  // 5. Login Successful - Save session
+  // successful login
+  // 1. Save the logged-in user (this is what the Dashboard reads)
+  const currentUser = {
+    fullName: user.fullName,
+    email: user.email,
+  };
+  localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+  // 2. Optional: Save session info
   const sessionData = {
-    id: user.id,
     fullName: user.fullName,
     email: user.email,
     loggedIn: true,
@@ -93,17 +100,12 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     sessionStorage.setItem("civicReportSession", JSON.stringify(sessionData));
   }
 
-  alert(`Welcome back, ${user.fullName}! Login successful.`);
-  // After successful login
-  const user = {
-    fullName: "Alex Johnson", // ← the name they used when signing up
-    email: "alex@example.com",
-  };
+  // 3. Show success message
+  alert("Welcome back, " + user.fullName + "!");
 
-  localStorage.setItem("currentUser", JSON.stringify(user));
-
-  //  rest
+  // 4. Clear the form
   document.getElementById("loginForm").reset();
-  window.location.href = "/pages/user.html";
-  console.log("Logged in user:", sessionData);
+
+  // 5. Redirect to Dashboard
+  window.location.href = "../pages/user.html";
 });
