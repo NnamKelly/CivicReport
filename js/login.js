@@ -94,6 +94,13 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
   }
 
   alert(`Welcome back, ${user.fullName}! Login successful.`);
+  // After successful login
+  const user = {
+    fullName: "Alex Johnson", // ← the name they used when signing up
+    email: "alex@example.com",
+  };
+
+  localStorage.setItem("currentUser", JSON.stringify(user));
 
   //  rest
   document.getElementById("loginForm").reset();

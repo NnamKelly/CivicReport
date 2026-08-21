@@ -4,24 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>user dashboard</title>
+    <title>Dashboard - CivicReport</title>
     <link rel="stylesheet" href="../styles/nav1.css">
+    <link rel="stylesheet" href="../styles/user.css">
 </head>
 
 <body>
 
-    <!--side -->
+    <!--side bar section-->
     <section class="sidebar">
-
         <!-- logo -->
         <div class="logo-section">
             <div class="logo">
                 <div class="logo-icon">
-                    <img src="" alt="pro" style="width: 10px; height: 10px;">
+                    <!-- Shield Icon -->
+                    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z" />
+                    </svg>
                 </div>
                 <div class="logo-text">CivicReport</div>
             </div>
-            <div class="subtitle">CivicReport Community Support</div>
+            <div class="subtitle1">CivicReport Community Support</div>
         </div>
 
         <!-- new rep btn -->
@@ -126,9 +130,96 @@
 
     </section>
 
-    <h1>WELCOME BACK</h1>
+    <div class="container">
+
+        <!-- Welcome -->
+        <div class="welcome">
+            <h1 id="welcomeText">Welcome back, User.</h1>
+            <p>Here's your current community impact overview.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats">
+
+            <div class="card">
+                <div class="card-title">
+                    📊 TOTAL REPORTS
+                </div>
+                <div>
+                    <span class="card-number" id="totalReports">0</span>
+                    <span class="card-info green">+12%</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    ⚠️ OPEN INCIDENTS
+                </div>
+                <div>
+                    <span class="card-number" id="openIncidents">0</span>
+                    <span class="card-info orange">Action required</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    ✅ RESOLVED
+                </div>
+                <div>
+                    <span class="card-number" id="resolvedCount">0</span>
+                    <span class="card-info gray">This month</span>
+                </div>
+            </div>
+
+            <div class="card impact-card">
+                <div class="card-title">Impact Score</div>
+
+                <div class="circle-container">
+                    <svg width="80" height="80" viewBox="0 0 80 80">
+                        <!-- Background circle -->
+                        <circle cx="40" cy="40" r="34" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
+
+                        <!-- Blue progress circle -->
+                        <circle class="progress-circle" cx="40" cy="40" r="34" stroke="#3b82f6" stroke-width="8"
+                            fill="none" stroke-dasharray="213" stroke-dashoffset="213" stroke-linecap="round"
+                            transform="rotate(-90 40 40)">
+                        </circle>
+                    </svg>
+                    <div class="circle">0</div>
+                </div>
+
+                <div class="top-text">Based on resolved reports</div>
+                <div class="small-text">Your vigilance is helping keep the community safe</div>
+            </div>
+        </div>
+
+        <!-- Recent Reports -->
+        <div class="reports-box">
+            <div class="reports-header">
+                <h2>📄 Recent Reports</h2>
+                <a href="#" class="view-all" onclick="viewAllReports()">View All</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ref ID</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="reportsTable">
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 
 
+    <script src="../js/user.js"></script>
 </body>
 
 </html>

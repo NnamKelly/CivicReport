@@ -1,4 +1,4 @@
-// counter
+// ====================== CHARACTER COUNTER ======================
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,7 +6,7 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-//selected files
+// ====================== SELECTED FILES ======================
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
@@ -21,50 +21,51 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// Current Location
+// ====================== USE CURRENT LOCATION ======================
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
-    document.getElementById("location").value = "Current Location ";
+    document.getElementById("location").value = "Current Location";
     alert("Location detected!");
   });
 
-// Form Submit
+// ====================== FORM SUBMIT ======================
 document.getElementById("reportForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+  e.preventDefault(); // stop page refresh
 
-  // get values
+  // Get form values
   const category = document.getElementById("category").value;
   const urgency = document.getElementById("urgency").value;
   const location = document.getElementById("location").value;
-  const description = document.getElementById("description").value;
+  const descriptionValue = document.getElementById("description").value;
 
-  // validation
-  if (!category || !location || !description) {
+  // Validation
+  if (!category || !location || !descriptionValue) {
     alert("Please fill in all required fields!");
     return;
   }
 
-  // reference ID
-  const refId = "CR-" + Date.now().toString().slice(-8);
+  // Create Reference ID
+  const refId = "CR-" + Date.now().toString().slice(-6);
 
-  // report object
+  // Create the report object
   const report = {
     referenceId: refId,
     category: category,
     urgency: urgency,
     location: location,
-    description: description,
-    date: new Date().toLocaleString(),
+    description: descriptionValue,
+    status: "Reported", // Important for dashboard
+    date: new Date().toLocaleDateString(),
   };
 
   // Get existing reports from localStorage
   let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
-  // new report
+  // Add the new report
   reports.push(report);
 
-  // Save  to localStorage
+  // Save back to localStorage
   localStorage.setItem("civicReports", JSON.stringify(reports));
 
   // Success message
