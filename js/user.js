@@ -1,4 +1,4 @@
-// ========== 1. SHOW USER NAME ==========
+// show user name
 function showUserName() {
   const welcomeText = document.getElementById("welcomeText");
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -10,7 +10,7 @@ function showUserName() {
   }
 }
 
-// ========== 2. STATUS BADGE ==========
+//status badge
 function getStatusBadge(status) {
   if (status === "Under Review" || status === "Pending") {
     return '<span class="badge under-review">Pending</span>';
@@ -27,7 +27,7 @@ function getStatusBadge(status) {
   return '<span class="badge reported">Reported</span>';
 }
 
-// ========== 3. UPDATE IMPACT SCORE CIRCLE ==========
+// update score circle
 function updateImpactScore(resolved, total) {
   let percentage = 0;
 
@@ -51,7 +51,7 @@ function updateImpactScore(resolved, total) {
   }
 }
 
-// ========== 4. LOAD REPORTS ==========
+//load reports
 function loadReports(showAll = false) {
   let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
@@ -115,7 +115,7 @@ function loadReports(showAll = false) {
   });
 }
 
-// ========== 5. VIEW SINGLE REPORT ==========
+//view single report
 function viewReport(refId) {
   const reports = JSON.parse(localStorage.getItem("civicReports")) || [];
   const report = reports.find((r) => r.referenceId === refId);
@@ -147,9 +147,9 @@ function viewReport(refId) {
   }
 }
 
-// ========== 6. VIEW ALL BUTTON ==========
+//view all btn
 function viewAllReports() {
-  loadReports(true); // true = show all reports
+  loadReports(true);
 }
 
 // Run when page loads
