@@ -1,4 +1,4 @@
-// ====================== CHARACTER COUNTER ======================
+// nub of char
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,14 +6,13 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// ====================== SELECTED FILES ======================
+// select
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
 photosInput.addEventListener("change", function () {
   fileList.innerHTML = "";
-  const files = Array.from(this.files).slice(0, 3); // max 3 files
-
+  const files = Array.from(this.files).slice(0, 3);
   files.forEach(function (file) {
     const p = document.createElement("p");
     p.textContent = "📷 " + file.name;
@@ -21,7 +20,7 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// ====================== USE CURRENT LOCATION ======================
+// current location
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
@@ -29,7 +28,7 @@ document
     alert("Location detected!");
   });
 
-// ====================== EDIT EXISTING REPORT ======================
+//edit
 const editReferenceId = new URLSearchParams(window.location.search).get("edit");
 let editingReport = null;
 
@@ -51,7 +50,7 @@ if (editReferenceId) {
   }
 }
 
-// ====================== FORM SUBMIT ======================
+// submit form
 document.getElementById("reportForm").addEventListener("submit", function (e) {
   e.preventDefault(); // stop page refresh
 
