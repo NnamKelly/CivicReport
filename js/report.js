@@ -29,6 +29,28 @@ document
     alert("Location detected!");
   });
 
+// ====================== EDIT EXISTING REPORT ======================
+const editReferenceId = new URLSearchParams(window.location.search).get("edit");
+let editingReport = null;
+
+if (editReferenceId) {
+  const reports = JSON.parse(localStorage.getItem("civicReports") || "[]");
+  editingReport = reports.find(
+    (report) => report.referenceId === editReferenceId,
+  );
+
+  if (editingReport) {
+    document.getElementById("category").value = editingReport.category || "";
+    document.getElementById("urgency").value = editingReport.urgency || "";
+    document.getElementById("location").value = editingReport.location || "";
+    document.getElementById("description").value =
+      editingReport.description || "";
+    charCount.textContent = document.getElementById("description").value.length;
+    document.querySelector("#reportForm button[type='submit']").textContent =
+      "Save Changes";
+  }
+}
+
 // ====================== FORM SUBMIT ======================
 document.getElementById("reportForm").addEventListener("submit", function (e) {
   e.preventDefault(); // stop page refresh
@@ -45,31 +67,43 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     return;
   }
 
-  // Create Reference ID
-  const refId = "CR-" + Date.now().toString().slice(-6);
-
-  // Create the report object
-  const report = {
-    referenceId: refId,
-    category: category,
-    urgency: urgency,
-    location: location,
-    description: descriptionValue,
-    status: "Reported", // Important for dashboard
-    date: new Date().toLocaleDateString(),
-  };
-
   // Get existing reports from localStorage
   let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
-  // Add the new report
-  reports.push(report);
+  if (editingReport) {
+    const reportIndex = reports.findIndex(
+      (report) => report.referenceId === editingReport.referenceId,
+    );
+    reports[reportIndex] = {
+      ...reports[reportIndex],
+      category,
+      urgency,
+      location,
+      description: descriptionValue,
+    };
+  } else {
+    const refId = "CR-" + Date.now().toString().slice(-6);
+    reports.push({
+      referenceId: refId,
+      category,
+      urgency,
+      location,
+      description: descriptionValue,
+      status: "Reported",
+      date: new Date().toLocaleDateString(),
+    });
+  }
 
   // Save back to localStorage
   localStorage.setItem("civicReports", JSON.stringify(reports));
 
   // Success message
-  alert("Report submitted successfully!\n\nYour Reference ID: " + refId);
+  alert(
+    editingReport
+      ? "Report updated successfully!"
+      : "Report submitted successfully!\n\nYour Reference ID: " +
+          reports[reports.length - 1].referenceId,
+  );
 
   // Clear the form
   document.getElementById("reportForm").reset();

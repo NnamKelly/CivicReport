@@ -1,11 +1,11 @@
 // show user name
 function showUserName() {
   const welcomeText = document.getElementById("welcomeText");
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser") || "null");
 
-  if (currentUser && currentUser.fullName) {
+  if (welcomeText && currentUser && currentUser.fullName) {
     welcomeText.textContent = "Welcome back, " + currentUser.fullName + ".";
-  } else {
+  } else if (welcomeText) {
     welcomeText.textContent = "Welcome back, User.";
   }
 }
@@ -56,6 +56,7 @@ function loadReports(showAll = false) {
   let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
   const tableBody = document.getElementById("reportsTable");
+  if (!tableBody) return;
   tableBody.innerHTML = "";
 
   // Count totals
@@ -108,11 +109,19 @@ function loadReports(showAll = false) {
           <button class="view-btn" onclick="viewReport('${report.referenceId}')">
             View
           </button>
+          <button class="view-btn" onclick="editReport('${report.referenceId}')">
+            Edit
+          </button>
         </td>
       `;
 
     tableBody.appendChild(row);
   });
+}
+
+function editReport(refId) {
+  window.location.href =
+    "../pages/report.html?edit=" + encodeURIComponent(refId);
 }
 
 //view single report
