@@ -134,78 +134,62 @@
 
         <!-- Welcome -->
         <div class="welcome">
-            <h1 id="welcomeText">Welcome back, User.</h1>
+            <h1>Welcome back, Alex.</h1>
             <p>Here's your current community impact overview.</p>
         </div>
 
         <!-- Stats Cards -->
         <div class="stats">
 
-            <div class="card icon">
-                <div class="card-title">
-                    TOTAL <br>REPORTS<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <path d="M14 2v6h6" />
-                        <path d="M16 13H8" />
-                        <path d="M16 17H8" />
-                        <path d="M10 9H8" />
-                    </svg>
-                </div>
-                <div>
-                    <span class="card-number" id="totalReports">0</span>
-                    <span class="card-info green">+12%</span>
-                </div>
-            </div>
-
+            <!-- Total Reports -->
             <div class="card">
-                <div class="card-title">
-                    OPEN <br>INCIDENTS
-                </div>
-                <div>
-                    <span class="card-number" id="openIncidents">0</span>
-                    <span class="card-info orange">Action required</span>
-                </div>
+                <div class="card-title">TOTAL REPORTS</div>
+                <span class="card-number">24</span>
+                <span class="card-info green">+12%</span>
             </div>
 
+            <!-- Open Incidents -->
             <div class="card">
-                <div class="card-title">
-                    RESOLVED<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                </div>
-                <div>
-                    <span class="card-number" id="resolvedCount">0</span>
-                    <span class="card-info gray">This month</span>
-                </div>
+                <div class="card-title">OPEN INCIDENTS</div>
+                <span class="card-number">3</span>
+                <span class="card-info orange">Action required</span>
             </div>
 
+            <!-- Resolved -->
+            <div class="card">
+                <div class="card-title">RESOLVED</div>
+                <span class="card-number">21</span>
+                <span class="card-info gray">This month</span>
+            </div>
+
+            <!-- Impact Score (Taller) -->
             <div class="card impact-card">
                 <div class="card-title">Impact Score</div>
 
-                <div class="circle-container">
-                    <svg width="80" height="80" viewBox="0 0 80 80">
-                        <!-- Background circle -->
-                        <circle cx="40" cy="40" r="34" stroke="#e5e7eb" stroke-width="8" fill="none"></circle>
-
-                        <!-- Blue progress circle -->
-                        <circle class="progress-circle" cx="40" cy="40" r="34" stroke="#3b82f6" stroke-width="8"
-                            fill="none" stroke-dasharray="213" stroke-dashoffset="213" stroke-linecap="round"
-                            transform="rotate(-90 40 40)">
+                <div class="circle-wrapper">
+                    <svg width="130" height="130" viewBox="0 0 130 130">
+                        <!-- Gray background -->
+                        <circle cx="65" cy="65" r="54" stroke="#e5e7eb" stroke-width="10" fill="none"></circle>
+                        <!-- Blue progress -->
+                        <circle cx="65" cy="65" r="54" stroke="#3b82f6" stroke-width="10" fill="none"
+                            stroke-dasharray="339" stroke-dashoffset="85" stroke-linecap="round"
+                            transform="rotate(-90 65 65)">
                         </circle>
                     </svg>
-                    <div class="circle">0</div>
+                    <div class="percent">75</div>
                 </div>
 
-                <div class="top-text">Based on resolved reports</div>
+                <div class="top-text">Top 25%</div>
                 <div class="small-text">Your vigilance is helping keep the community safe</div>
             </div>
+
         </div>
 
         <!-- Recent Reports -->
         <div class="reports-box">
             <div class="reports-header">
-                <h2>📄 Recent Reports</h2>
-                <a href="#" class="view-all" onclick="viewAllReports()">View All</a>
+                <h2>Recent Reports</h2>
+                <a href="#" class="view-all">View All</a>
             </div>
 
             <table>
@@ -218,8 +202,35 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="reportsTable">
-                    <!-- Filled by JavaScript -->
+                <tbody>
+                    <tr>
+                        <td class="ref-id">#REP-8942</td>
+                        <td>Vandalism</td>
+                        <td>Oct 24, 2023</td>
+                        <td><span class="badge under-review">Under Review</span></td>
+                        <td><button class="view-btn">View</button></td>
+                    </tr>
+                    <tr>
+                        <td class="ref-id">#REP-8840</td>
+                        <td>Suspicious Activity</td>
+                        <td>Oct 22, 2023</td>
+                        <td><span class="badge reported">Reported</span></td>
+                        <td><button class="view-btn">View</button></td>
+                    </tr>
+                    <tr>
+                        <td class="ref-id">#REP-8921</td>
+                        <td>Noise Complaint</td>
+                        <td>Oct 18, 2023</td>
+                        <td><span class="badge resolved">Resolved</span></td>
+                        <td><button class="view-btn">View</button></td>
+                    </tr>
+                    <tr>
+                        <td class="ref-id">#REP-8915</td>
+                        <td>Maintenance</td>
+                        <td>Oct 15, 2023</td>
+                        <td><span class="badge in-progress">In Progress</span></td>
+                        <td><button class="view-btn">View</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
