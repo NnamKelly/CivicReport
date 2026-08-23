@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>authority dashboard</title>
     <link rel="stylesheet" href="../styles/nav1.css">
+    <link rel="stylesheet" href="../styles/authority.css">
 </head>
 
 <body>
@@ -123,113 +124,9 @@
 
     </section>
 
-    <div class="container">
-        <div class="header">
-            <div>
-                <h1>System Overview</h1>
-                <p>Real-time incident tracking and community safety metrics.</p>
-            </div>
-            <div class="header-actions">
-                <button onclick="downloadCSV()">↓ CSV</button>
-                <button onclick="downloadJSON()">{ } JSON</button>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stat-card">
-                <div class="title">TOTAL REPORTS</div>
-                <div class="number" id="totalReports">0</div>
-                <div class="stat-sub green">+12% this week</div>
-            </div>
-            <div class="stat-card">
-                <div class="title">OPEN</div>
-                <div class="number" id="openCount">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="title">UNDER REVIEW</div>
-                <div class="number" id="reviewCount">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="title">RESOLVED</div>
-                <div class="number" id="resolvedCount">0</div>
-            </div>
-            <div class="stat-card">
-                <div class="title">TODAY</div>
-                <div class="number" id="todayCount">0</div>
-            </div>
-        </div>
-
-        <!-- Filters -->
-        <div class="filters">
-            <div class="search-box">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Search ID, location...">
-            </div>
-            <select id="categoryFilter">
-                <option value="All">Category: All</option>
-                <option value="Infrastructure Damage">Infrastructure Damage</option>
-                <option value="Safety Hazard">Safety Hazard</option>
-                <option value="Noise Complaint">Noise Complaint</option>
-                <option value="Vandalism">Vandalism</option>
-                <option value="Suspicious Activity">Suspicious Activity</option>
-            </select>
-            <select id="statusFilter">
-                <option value="All">Status: All</option>
-                <option value="Pending">Pending</option>
-                <option value="Under Review">Under Review</option>
-                <option value="Reported">Reported</option>
-                <option value="Resolved">Resolved</option>
-                <option value="In Progress">In Progress</option>
-            </select>
-        </div>
-
-        <!-- Table -->
-        <div class="table-box">
-            <div class="table-header">All Incidents</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>DATE / TIME</th>
-                        <th>CATEGORY</th>
-                        <th>LOCATION</th>
-                        <th>STATUS</th>
-                        <th>ACTIONS</th>
-                    </tr>
-                </thead>
-                <tbody id="incidentsTable"></tbody>
-            </table>
-            <div class="pagination">
-                <span id="showingText">Showing 0 of 0 entries</span>
-                <div>
-                    <button onclick="prevPage()">Previous</button>
-                    <button onclick="nextPage()">Next</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Modal -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <h3>Edit Incident Status</h3>
-            <p id="editId" style="margin-bottom:12px;color:#6b7280;"></p>
-            <select id="newStatus">
-                <option value="Pending">Pending</option>
-                <option value="Under Review">Under Review</option>
-                <option value="Reported">Reported</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Resolved">Resolved</option>
-            </select>
-            <div class="modal-buttons">
-                <button class="cancel-btn" onclick="closeModal()">Cancel</button>
-                <button class="save-btn" onclick="saveStatus()">Save</button>
-            </div>
-        </div>
-    </div>
 
 
+    <script src="../js/autho.js"></script>
 </body>
 
 </html>
