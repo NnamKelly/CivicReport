@@ -77,6 +77,14 @@
     gap: 6px;
 }
 
+.stat-title svg {
+    width: 30px;
+    position: absolute;
+    margin-left: 200px;
+}
+
+
+
 .stat-number {
     font-size: 28px;
     font-weight: 700;
