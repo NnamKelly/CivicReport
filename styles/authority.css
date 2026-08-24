@@ -2,8 +2,8 @@
 @import "../styles/reset.css";
 
 .container {
-    max-width: 1000px;
-    margin: 0 auto;
+    width: 70%;
+    margin: 20px auto;
 }
 
 /* header */
@@ -15,7 +15,8 @@
 }
 
 .header h1 {
-    font-size: 22px;
+    font-size: 40px;
+    font-weight: bold;
     color: var(--color);
     margin-bottom: 4px;
 }
@@ -26,6 +27,7 @@
 }
 
 .search-box {
+    padding-top: 40px;
     position: relative;
 }
 
@@ -41,7 +43,7 @@
 .search-icon {
     position: absolute;
     left: 12px;
-    top: 50%;
+    top: 75%;
     transform: translateY(-50%);
     color: var(--color);
 }
@@ -62,7 +64,6 @@
 }
 
 .stat-card {
-    background: white;
     border: 1px solid var(--hbg);
     border-radius: 12px;
     padding: 18px;
@@ -83,7 +84,19 @@
     margin-left: 200px;
 }
 
+svg .green {
+    color: var(--tertiary);
+    background: var(--bg);
+    border-radius: 25px;
+    padding: 10px;
+}
 
+.orange {
+    color: var(--secondary);
+    background: #fef3c7;
+    border-radius: 25px;
+    padding: 10px;
+}
 
 .stat-number {
     font-size: 28px;
@@ -104,9 +117,8 @@
     color: var(--color);
 }
 
-/* Actionable Items */
+/* actionable items */
 .action-box {
-    background: white;
     border: 1px solid var(--hbg);
     border-radius: 12px;
     padding: 18px;
@@ -214,7 +226,6 @@
     cursor: pointer;
     margin-left: 6px;
     border: 1px solid var(--hbg);
-    background: white;
 }
 
 .btns .primary {
@@ -233,7 +244,6 @@
 
 /* Map */
 .map-box {
-    background: white;
     border: 1px solid var(--hbg);
     border-radius: 12px;
     padding: 18px;
