@@ -1,4 +1,4 @@
-// nub of char
+// Character counter
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,7 +6,7 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// select
+// Show selected files
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
@@ -20,7 +20,7 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// current location
+// Use current location
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
@@ -28,37 +28,15 @@ document
     alert("Location detected!");
   });
 
-//edit
-const editReferenceId = new URLSearchParams(window.location.search).get("edit");
-let editingReport = null;
-
-if (editReferenceId) {
-  const reports = JSON.parse(localStorage.getItem("civicReports") || "[]");
-  editingReport = reports.find(
-    (report) => report.referenceId === editReferenceId,
-  );
-
-  if (editingReport) {
-    document.getElementById("category").value = editingReport.category || "";
-    document.getElementById("urgency").value = editingReport.urgency || "";
-    document.getElementById("location").value = editingReport.location || "";
-    document.getElementById("description").value =
-      editingReport.description || "";
-    charCount.textContent = document.getElementById("description").value.length;
-    document.querySelector("#reportForm button[type='submit']").textContent =
-      "Save Changes";
-  }
-}
-
-// submit form
+// ========== MAIN SUBMIT FUNCTION ==========
 document.getElementById("reportForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // stop page refresh
+  e.preventDefault();
 
-  // Get form values
   const category = document.getElementById("category").value;
   const urgency = document.getElementById("urgency").value;
   const location = document.getElementById("location").value;
   const descriptionValue = document.getElementById("description").value;
+  const photoInput = document.getElementById("photos");
 
   // Validation
   if (!category || !location || !descriptionValue) {
@@ -66,46 +44,46 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     return;
   }
 
-  // Get existing reports from localStorage
-  let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
+  // Function that actually saves the report
+  function saveReport(imageData) {
+    let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
-  if (editingReport) {
-    const reportIndex = reports.findIndex(
-      (report) => report.referenceId === editingReport.referenceId,
-    );
-    reports[reportIndex] = {
-      ...reports[reportIndex],
-      category,
-      urgency,
-      location,
-      description: descriptionValue,
-    };
-  } else {
-    const refId = "CR-" + Date.now().toString().slice(-6);
-    reports.push({
-      referenceId: refId,
-      category,
-      urgency,
-      location,
+    const report = {
+      referenceId: "CR-" + Date.now().toString().slice(-6),
+      category: category,
+      urgency: urgency,
+      location: location,
       description: descriptionValue,
       status: "Reported",
       date: new Date().toLocaleDateString(),
-    });
+      image: imageData || null, // ← this is the important part
+    };
+
+    reports.push(report);
+    localStorage.setItem("civicReports", JSON.stringify(reports));
+
+    alert(
+      "Report submitted successfully!\n\nReference ID: " + report.referenceId,
+    );
+
+    // Clear form
+    document.getElementById("reportForm").reset();
+    charCount.textContent = "0";
+    fileList.innerHTML = "";
   }
 
-  // Save back to localStorage
-  localStorage.setItem("civicReports", JSON.stringify(reports));
+  // Check if user uploaded an image
+  if (photoInput.files && photoInput.files[0]) {
+    const reader = new FileReader();
 
-  // Success message
-  alert(
-    editingReport
-      ? "Report updated successfully!"
-      : "Report submitted successfully!\n\nYour Reference ID: " +
-          reports[reports.length - 1].referenceId,
-  );
+    reader.onload = function (event) {
+      // event.target.result contains the base64 image
+      saveReport(event.target.result);
+    };
 
-  // Clear the form
-  document.getElementById("reportForm").reset();
-  charCount.textContent = "0";
-  fileList.innerHTML = "";
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    // No image uploaded
+    saveReport(null);
+  }
 });

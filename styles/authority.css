@@ -78,6 +78,19 @@
     gap: 6px;
 }
 
+.card-image {
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    background: #f1f5f9;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .stat-title svg {
     width: 30px;
     position: absolute;
