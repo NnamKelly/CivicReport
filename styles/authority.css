@@ -170,13 +170,24 @@ svg .green {
 }
 
 /* Report Cards */
+#reportList {
+    height: 240px;
+    overflow-y: auto;
+    padding-right: 6px;
+    scroll-behavior: smooth;
+}
+
 .report-card {
+    height: 120px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    overflow: hidden;
     border: 1px solid var(--hbg);
     border-radius: 10px;
     padding: 14px;
-    margin-bottom: 12px;
     background: #fafafa;
 }
+
 
 .report-top {
     display: flex;
