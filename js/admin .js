@@ -54,7 +54,7 @@ function updateStats() {
     allIncidents.length,
   );
 
-  // ========== UPDATE BARS ==========
+  //bars update
   const openPercent = Math.round((open / total) * 100);
   const reviewPercent = Math.round((review / total) * 100);
   const resolvedPercent = Math.round((resolved / total) * 100);
@@ -64,23 +64,13 @@ function updateStats() {
   document.getElementById("resolvedBar").style.width = resolvedPercent + "%";
 }
 
-// ========== PERCENTAGE BARS ==========
+// % bars
 function updateBars(open, review, resolved, total) {
   if (total === 0) total = 1; // prevent division by zero
 
   const openPercent = Math.round((open / total) * 100);
   const reviewPercent = Math.round((review / total) * 100);
   const resolvedPercent = Math.round((resolved / total) * 100);
-
-  // You can add these elements in your HTML if you want visible bars
-  // Example: <div class="bar" id="openBar"></div>
-  const openBar = document.getElementById("openBar");
-  const reviewBar = document.getElementById("reviewBar");
-  const resolvedBar = document.getElementById("resolvedBar");
-
-  if (openBar) openBar.style.width = openPercent + "%";
-  if (reviewBar) reviewBar.style.width = reviewPercent + "%";
-  if (resolvedBar) resolvedBar.style.width = resolvedPercent + "%";
 }
 
 function getBadge(status) {
@@ -102,7 +92,7 @@ function renderTable() {
   const pageData = filteredIncidents.slice(start, start + perPage);
 
   if (pageData.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#94a3b8;">No incidents found</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#94a3b8;">No incidents found</td></tr>`;
   } else {
     pageData.forEach((item) => {
       const row = document.createElement("tr");
@@ -113,8 +103,8 @@ function renderTable() {
           <td>${item.location}</td>
           <td>${getBadge(item.status)}</td>
           <td>
-            <button class="action-btn" onclick="viewItem('${item.referenceId}')">👁️</button>
-            <button class="action-btn" onclick="openEdit('${item.referenceId}')">✏️</button>
+            <button class="action-btn" onclick="viewItem('${item.referenceId}')">👁‍🗨</button>
+            <button class="action-btn" style="font-weight:800; color: black;" onclick="openEdit('${item.referenceId}')">🖊</button>
           </td>
         `;
       tbody.appendChild(row);
@@ -146,7 +136,7 @@ function applyFilters() {
   renderTable();
 }
 
-// ========== VIEW REPORT ==========
+//view report
 function viewItem(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
   if (item) {
@@ -160,7 +150,7 @@ function viewItem(id) {
     );
   }
 }
-// ========== OPEN EDIT (when clicking the pencil icon) ==========
+// open edits
 function openEdit(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
 
@@ -181,7 +171,7 @@ function openEdit(id) {
   updateStatus(id, newStatus.trim());
 }
 
-// ========== UPDATE STATUS (the important part) ==========
+// update status
 function updateStatus(id, newStatus) {
   // 1. Update the data in memory
   allIncidents = allIncidents.map(function (item) {
