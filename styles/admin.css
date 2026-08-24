@@ -292,8 +292,9 @@ tr:hover {
 .panel {
     border: 1px solid #e2e8f0;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 20px;
     font-size: 20px;
+    line-height: 1.5;
     width: 300px;
     background-color: var(--hbg);
 
@@ -320,6 +321,7 @@ tr:hover {
     margin-bottom: 14px;
     color: #0f172a;
     display: flex;
+    padding-bottom: 8px;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #d2dbec;
@@ -368,11 +370,9 @@ tr:hover {
 .status-item {
     display: flex;
     align-items: center;
-    gap: 8px;
     margin-bottom: 10px;
     font-size: 14px;
     color: #334155;
-
 }
 
 .dot {
