@@ -133,7 +133,46 @@
 
     </section>
 
-    <h1>COMMUNITY FEED</h1>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Community Feed</h1>
+                <p>Stay informed about local incidents and community updates.</p>
+            </div>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search incidents...">
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters" id="filterButtons">
+            <button class="filter-btn active" data-filter="all">All Filters</button>
+            <button class="filter-btn" data-filter="all-categories">All Categories</button>
+            <button class="filter-btn" data-filter="Vandalism">Vandalism</button>
+            <button class="filter-btn" data-filter="Infrastructure">Infrastructure</button>
+            <button class="filter-btn" data-filter="Suspicious Activity">Suspicious Activity</button>
+            <button class="filter-btn" data-filter="Traffic">Traffic</button>
+            <button class="filter-btn status-pending" data-filter="Pending">Status: Pending</button>
+            <button class="filter-btn" data-filter="Resolved">Status: Resolved</button>
+        </div>
+
+        <!-- Feed Cards -->
+        <div class="feed-grid" id="feedGrid">
+            <!-- Cards will be added by JavaScript -->
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more">
+            <button onclick="loadMore()">Load More Incidents</button>
+        </div>
+
+    </div>
+
+
+
 
 </body>
 
