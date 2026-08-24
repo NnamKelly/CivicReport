@@ -3,29 +3,31 @@ let filteredReports = [];
 let currentFilter = "all";
 let visibleCount = 6;
 
-// ========== LOAD REPORTS FROM LOCAL STORAGE ==========
+// Load reports from localStorage
 function loadReports() {
   const saved = JSON.parse(localStorage.getItem("civicReports")) || [];
-  allReports = saved;
+
+  if (saved.length > 0) {
+    allReports = saved;
+  } else {
+  }
+
   filteredReports = [...allReports];
   renderFeed();
 }
 
-// ========== STATUS BADGE ==========
+// Create status badge
 function getStatusBadge(status) {
-  if (status === "Resolved") {
+  if (status === "Resolved")
     return '<span class="status-badge status-resolved">Resolved</span>';
-  }
-  if (status === "Pending" || status === "Under Review") {
+  if (status === "Pending" || status === "Under Review")
     return '<span class="status-badge status-pending">Pending</span>';
-  }
-  if (status === "In Progress") {
+  if (status === "In Progress")
     return '<span class="status-badge status-progress">In Progress</span>';
-  }
   return '<span class="status-badge status-reported">Reported</span>';
 }
 
-// ========== RENDER THE FEED ==========
+// Render the cards
 function renderFeed() {
   const grid = document.getElementById("feedGrid");
   grid.innerHTML = "";
@@ -41,45 +43,52 @@ function renderFeed() {
     const card = document.createElement("div");
     card.className = "card";
 
-    // Show real image if it exists
-    let imageContent = "";
-    if (report.image) {
-      imageContent = `<img src="${report.image}" alt="Report Image">`;
-    } else {
-      imageContent = `<div class="no-image">📷 No Image</div>`;
+    // Simple placeholder image based on category
+    let imageContent = "📷 No Image";
+    if (
+      report.category &&
+      report.category.toLowerCase().includes("infrastructure")
+    ) {
+      imageContent = "🛣️ Infrastructure";
+    } else if (
+      report.category &&
+      report.category.toLowerCase().includes("vandalism")
+    ) {
+      imageContent = "🖊 Vandalism";
     }
 
     card.innerHTML = `
-      <div class="card-image">
-        ${imageContent}
-        ${getStatusBadge(report.status)}
-      </div>
-      <div class="card-body">
-        <div class="card-meta">
-          <span class="category-tag">${report.category || "General"}</span>
-          <span class="time-ago">${report.date || "Recently"}</span>
-        </div>
-        <div class="card-title">${report.category || "Incident"}</div>
-        <div class="card-desc">${report.description || "No description available."}</div>
-        <div class="card-footer">
-          <div class="tracking">👥 ${Math.floor(Math.random() * 40) + 5} tracking</div>
-          <button class="view-btn" onclick="viewDetails('${report.referenceId}')">View Details</button>
-        </div>
-      </div>
-    `;
+          <div class="card-image">
+            ${imageContent}
+            ${getStatusBadge(report.status)}
+          </div>
+          <div class="card-body">
+            <div class="card-meta">
+              <span class="category-tag">${report.category || "General"}</span>
+              <span class="time-ago">${report.date || "Recently"}</span>
+            </div>
+            <div class="card-title">${report.title || report.category}</div>
+            <div class="card-desc">${report.description || "No description available."}</div>
+            <div class="card-footer">
+              <div class="tracking">👥 ${Math.floor(Math.random() * 40) + 5} tracking</div>
+              <button class="view-btn" onclick="viewDetails('${report.referenceId}')">View Details</button>
+            </div>
+          </div>
+        `;
 
     grid.appendChild(card);
   });
 }
 
-// ========== FILTER BUTTONS ==========
+// Filter buttons
 document
   .getElementById("filterButtons")
   .addEventListener("click", function (e) {
     if (e.target.classList.contains("filter-btn")) {
-      document.querySelectorAll(".filter-btn").forEach(function (btn) {
-        btn.classList.remove("active");
-      });
+      // Remove active from all
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach((btn) => btn.classList.remove("active"));
       e.target.classList.add("active");
 
       currentFilter = e.target.getAttribute("data-filter");
@@ -87,11 +96,12 @@ document
     }
   });
 
-// ========== APPLY SEARCH + FILTER ==========
+// Apply search + filter
 function applyFilters() {
   const search = document.getElementById("searchInput").value.toLowerCase();
 
   filteredReports = allReports.filter(function (report) {
+    // Search
     const matchSearch =
       !search ||
       (report.category && report.category.toLowerCase().includes(search)) ||
@@ -100,8 +110,8 @@ function applyFilters() {
       (report.location && report.location.toLowerCase().includes(search)) ||
       (report.referenceId && report.referenceId.toLowerCase().includes(search));
 
+    // Category / Status filter
     let matchFilter = true;
-
     if (currentFilter === "all" || currentFilter === "all-categories") {
       matchFilter = true;
     } else if (
@@ -123,44 +133,30 @@ function applyFilters() {
   renderFeed();
 }
 
-// ========== LIVE SEARCH ==========
+// Live search
 document.getElementById("searchInput").addEventListener("input", applyFilters);
 
-// ========== VIEW DETAILS ==========
+// View details
 function viewDetails(id) {
-  const report = allReports.find(function (r) {
-    return r.referenceId === id;
-  });
-
+  const report = allReports.find((r) => r.referenceId === id);
   if (report) {
     alert(
-      "Incident Details\n\n" +
-        "ID: " +
-        report.referenceId +
-        "\n" +
-        "Category: " +
-        report.category +
-        "\n" +
-        "Status: " +
-        report.status +
-        "\n" +
-        "Location: " +
-        (report.location || "Not specified") +
-        "\n" +
-        "Date: " +
-        report.date +
-        "\n\n" +
-        "Description:\n" +
-        (report.description || "No description"),
+      `Incident Details\n\n` +
+        `ID: ${report.referenceId}\n` +
+        `Category: ${report.category}\n` +
+        `Status: ${report.status}\n` +
+        `Location: ${report.location || "Not specified"}\n` +
+        `Date: ${report.date}\n\n` +
+        `Description:\n${report.description || "No description"}`,
     );
   }
 }
 
-// ========== LOAD MORE ==========
+// Load more
 function loadMore() {
   visibleCount += 3;
   renderFeed();
 }
 
-// ========== START ==========
+// Start
 loadReports();

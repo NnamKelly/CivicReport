@@ -1,4 +1,4 @@
-// Character counter
+// counter
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,13 +6,14 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// Show selected files
+//selected files
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
 photosInput.addEventListener("change", function () {
   fileList.innerHTML = "";
-  const files = Array.from(this.files).slice(0, 3);
+  const files = Array.from(this.files).slice(0, 3); // max 3 files
+
   files.forEach(function (file) {
     const p = document.createElement("p");
     p.textContent = "📷 " + file.name;
@@ -20,70 +21,57 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// Use current location
+// Current Location
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
-    document.getElementById("location").value = "Current Location";
+    document.getElementById("location").value = "Current Location ";
     alert("Location detected!");
   });
 
-// ========== MAIN SUBMIT FUNCTION ==========
+// Form Submit
 document.getElementById("reportForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  // get values
   const category = document.getElementById("category").value;
   const urgency = document.getElementById("urgency").value;
   const location = document.getElementById("location").value;
-  const descriptionValue = document.getElementById("description").value;
-  const photoInput = document.getElementById("photos");
+  const description = document.getElementById("description").value;
 
-  // Validation
-  if (!category || !location || !descriptionValue) {
+  // validation
+  if (!category || !location || !description) {
     alert("Please fill in all required fields!");
     return;
   }
 
-  // Function that actually saves the report
-  function saveReport(imageData) {
-    let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
+  // reference ID
+  const refId = "CR-" + Date.now().toString().slice(-8);
 
-    const report = {
-      referenceId: "CR-" + Date.now().toString().slice(-6),
-      category: category,
-      urgency: urgency,
-      location: location,
-      description: descriptionValue,
-      status: "Reported",
-      date: new Date().toLocaleDateString(),
-      image: imageData || null, // ← this is the important part
-    };
+  // report object
+  const report = {
+    referenceId: refId,
+    category: category,
+    urgency: urgency,
+    location: location,
+    description: description,
+    date: new Date().toLocaleString(),
+  };
 
-    reports.push(report);
-    localStorage.setItem("civicReports", JSON.stringify(reports));
+  // Get existing reports from localStorage
+  let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
-    alert(
-      "Report submitted successfully!\n\nReference ID: " + report.referenceId,
-    );
+  // new report
+  reports.push(report);
 
-    // Clear form
-    document.getElementById("reportForm").reset();
-    charCount.textContent = "0";
-    fileList.innerHTML = "";
-  }
+  // Save  to localStorage
+  localStorage.setItem("civicReports", JSON.stringify(reports));
 
-  // Check if user uploaded an image
-  if (photoInput.files && photoInput.files[0]) {
-    const reader = new FileReader();
+  // Success message
+  alert("Report submitted successfully!\n\nYour Reference ID: " + refId);
 
-    reader.onload = function (event) {
-      // event.target.result contains the base64 image
-      saveReport(event.target.result);
-    };
-
-    reader.readAsDataURL(photoInput.files[0]);
-  } else {
-    // No image uploaded
-    saveReport(null);
-  }
+  // Clear the form
+  document.getElementById("reportForm").reset();
+  charCount.textContent = "0";
+  fileList.innerHTML = "";
 });

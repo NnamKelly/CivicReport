@@ -2,7 +2,7 @@
 @import "../styles/reset.css";
 
 .container {
-    width: 70%;
+    width: 80%;
     margin: 20px auto;
 }
 
@@ -76,19 +76,6 @@
     display: flex;
     align-items: center;
     gap: 6px;
-}
-
-.card-image {
-    height: 160px;
-    overflow: hidden;
-    position: relative;
-    background: #f1f5f9;
-}
-
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 .stat-title svg {
@@ -170,24 +157,13 @@ svg .green {
 }
 
 /* Report Cards */
-#reportList {
-    height: 240px;
-    overflow-y: auto;
-    padding-right: 6px;
-    scroll-behavior: smooth;
-}
-
 .report-card {
-    height: 120px;
-    box-sizing: border-box;
-    margin-bottom: 12px;
-    overflow: hidden;
     border: 1px solid var(--hbg);
     border-radius: 10px;
     padding: 14px;
+    margin-bottom: 12px;
     background: #fafafa;
 }
-
 
 .report-top {
     display: flex;
@@ -266,7 +242,7 @@ svg .green {
     border: none;
 }
 
-/* map */
+/* Map */
 .map-box {
     border: 1px solid var(--hbg);
     border-radius: 12px;
@@ -336,22 +312,10 @@ svg .green {
     border-radius: 50%;
 }
 
-#reportList {
-    max-height: 420px;
-    /* Shows about 3 report cards */
-    overflow-y: auto;
-    /* Enables vertical scrolling */
-    padding-right: 6px;
-}
-
-/*scroll bar */
-#reportList::-webkit-scrollbar {
-    width: 6px;
-}
-
-#reportList::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
+.empty {
+    text-align: center;
+    padding: 30px;
+    color: var(--color);
 }
 
 @media (max-width: 800px) {
