@@ -3,8 +3,11 @@
 
     body {
         display: flex;
+        min-height: 100vh;
+        margin: 0;
     }
 
+    /* sidebar */
     .sidebar {
         width: 250px;
         height: 100vh;
@@ -12,9 +15,14 @@
         padding: 24px 16px;
         display: flex;
         flex-direction: column;
-        border-right: 1px solid var(--primary);
+        border-right: 1px solid var(--color);
+        position: sticky;
+        /* Makes it sticky */
+        top: 0;
+        overflow-y: auto;
     }
 
+    /* logo */
     .logo-section {
         margin-bottom: 24px;
     }
@@ -22,14 +30,14 @@
     .logo {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 8px;
         margin-bottom: 4px;
         color: var(--primary);
     }
 
     .logo-icon {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         color: var(--primary);
         border-radius: 8px;
         display: flex;
@@ -38,36 +46,25 @@
     }
 
     .logo-text {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: bold;
         color: var(--primary);
     }
 
-
     .subtitle {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--color);
-        padding-left: 20px;
+        padding-left: 40px;
     }
 
-    .subtitle1 {
-        font-size: 16px;
-        color: var(--color);
-    }
-
-    .subtitle2 {
-        font-size: 11px;
-        color: var(--color);
-    }
-
-
+    /* new rep btn */
     .new-report-btn {
         background-color: var(--primary);
         color: white;
         border: none;
         padding: 12px;
         border-radius: 8px;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 500;
         cursor: pointer;
         margin-bottom: 20px;
@@ -77,16 +74,19 @@
         justify-content: center;
         gap: 6px;
         text-decoration: none;
-        list-style: none;
+        transition: background 0.2s;
     }
 
     .new-report-btn:hover {
-        background-color: var(--primary);
+        background-color: #1d4ed8;
     }
 
+    /* menu */
     .menu {
         list-style: none;
         flex-grow: 1;
+        padding: 0;
+        margin: 0;
     }
 
     .menu li {
@@ -101,7 +101,8 @@
         text-decoration: none;
         color: var(--color);
         border-radius: 8px;
-        font-size: 15px;
+        font-size: 14px;
+        transition: all 0.2s;
     }
 
     .menu a:hover {
@@ -110,9 +111,9 @@
 
     .menu a.active {
         background-color: var(--secondary);
-        color: black;
+        color: white;
+        border: none;
     }
-
 
     .menu a svg,
     .bottom-links a svg {
@@ -121,45 +122,31 @@
         flex-shrink: 0;
     }
 
+    /* Bottom Links */
     .bottom-links {
         list-style: none;
         border-top: 1px solid var(--color);
-        padding-top: 8px;
+        padding-top: 12px;
+        margin: 0;
     }
 
     .bottom-links a {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding-left: 14px;
-        padding-top: 8px;
-        padding-bottom: 10px;
+        padding: 10px 14px;
         text-decoration: none;
         color: var(--color);
         border-radius: 8px;
         font-size: 14px;
-    }
-
-    .bottom-links button {
-        background-color: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 15px;
-        font-weight: 500;
-        cursor: pointer;
-        margin-bottom: 20px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
+        transition: background 0.2s;
     }
 
     .bottom-links a:hover {
         background-color: #f3f4f6;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
         .sidebar {
             width: 100%;
