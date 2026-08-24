@@ -151,13 +151,16 @@
         <!-- filters -->
         <div class="filters" id="filterButtons">
             <button class="filter-btn active" data-filter="all">All Filters</button>
-            <button class="filter-btn" data-filter="all-categories">All Categories</button>
-            <button class="filter-btn" data-filter="Vandalism">Vandalism</button>
-            <button class="filter-btn" data-filter="Infrastructure">Infrastructure</button>
-            <button class="filter-btn" data-filter="Suspicious Activity">Suspicious Activity</button>
-            <button class="filter-btn" data-filter="Traffic">Traffic</button>
-            <button class="filter-btn status-pending" data-filter="Pending">Status: Pending</button>
-            <button class="filter-btn" data-filter="Resolved">Status: Resolved</button>
+            <button class="bar">|</button>
+            <button class="filter-btn active" data-filter="all-categories">All Categories</button>
+            <button class="filter-btn active" data-filter="Vandalism">Vandalism</button>
+            <button class="filter-btn active" data-filter="Infrastructure">Infrastructure</button>
+            <button class="filter-btn active" data-filter="Suspicious Activity">Suspicious Activity</button>
+            <button class="filter-btn active" data-filter="Traffic">Traffic</button>
+            <button class="filter-btn active" data-filter="Pending">Status: <span
+                    class="pending">Pending</span></button>
+            <button class="filter-btn active" data-filter="Resolved">Status: <span
+                    class="resolved">Resolved</span></button>
         </div>
 
         <!-- cards -->
@@ -173,7 +176,7 @@
     </div>
 
 
-
+    <script src="../js/community.js"></script>
 
 </body>
 
