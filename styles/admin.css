@@ -357,6 +357,10 @@ tr:hover {
 
 }
 
+.category-item span {
+    font-weight: 800;
+}
+
 .category-item:last-child {
     border-bottom: none;
 }
