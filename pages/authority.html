@@ -125,8 +125,76 @@
     </section>
 
 
+    <div class="container">
 
-    <script src="../js/autho.js"></script>
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Authority Dashboard</h1>
+                <p>Real-time incident management and operational overview.</p>
+            </div>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search incidents...">
+            </div>
+        </div>
+
+        <!-- Top Section -->
+        <div class="top">
+
+            <!-- Left Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-title">RESOLVED THIS WEEK ✅</div>
+                    <div class="stat-number" id="resolvedCount">0</div>
+                    <div class="stat-sub green">+12% from last week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">AVG RESOLUTION TIME ⏱️</div>
+                    <div class="stat-number">4.2 <span style="font-size:16px">hrs</span></div>
+                    <div class="stat-sub gray">Target: &lt; 5.0 hrs</div>
+                </div>
+            </div>
+
+            <!-- Actionable Items -->
+            <div class="action-box">
+                <div class="action-header">
+                    <h2>Actionable Items</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="filterStatus('all')">All</button>
+                        <button class="tab" onclick="filterStatus('Reported')">Reported</button>
+                        <button class="tab" onclick="filterStatus('In Progress')">In Progress</button>
+                    </div>
+                </div>
+
+                <div id="reportList">
+                    <!-- Reports will load here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Incident Map -->
+        <div class="map-box">
+            <div class="map-title">Live Incident Map</div>
+            <div class="map-area">
+                <div class="dot red"></div>
+                <div class="dot orange"></div>
+                <div class="dot yellow"></div>
+                🗺️ Map Placeholder
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#ef4444"></div> High Priority
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#f97316"></div> Medium Priority
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 
 </html>
