@@ -46,7 +46,7 @@ body {
 }
 
 /* Header */
-.header {
+.flex {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -57,12 +57,12 @@ body {
     font-size: 50px;
     font-weight: 600;
     color: #0f172a;
-    padding-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 .header p {
     color: #64748b;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .header-buttons button {
@@ -70,11 +70,10 @@ body {
     color: var(--primary);
     font-weight: bold;
     border: 1px solid var(--primary);
-    padding: 10px 15px;
+    padding: 15px 20px;
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
-    margin-left: 8px;
 }
 
 .header-buttons button:hover {
@@ -272,6 +271,15 @@ tr:hover {
     border-radius: 6px;
     cursor: pointer;
     margin-left: 6px;
+}
+
+.bg {
+    background: var(--bg);
+
+}
+
+.bg:hover {
+    background: var(--hbg);
 }
 
 /* Bottom sections */
