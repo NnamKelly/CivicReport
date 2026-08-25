@@ -140,23 +140,42 @@ function applyFilters() {
 // view report
 function viewItem(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
-
-  if (item) {
-    alert(
-      `📋 Report Details\n\n` +
-        `ID: ${item.referenceId}\n` +
-        `Category: ${item.category}\n` +
-        `Location: ${item.location}\n` +
-        `Urgency: ${item.urgency}\n` +
-        `Status: ${item.status}\n` +
-        `Date: ${item.date}\n\n` +
-        `👤 Reported by:\n` +
-        `Name: ${item.reporterName}\n` +
-        `Phone: ${item.reporterPhone}\n\n` +
-        `Description:\n${item.description}`,
-    );
+  if (!item) {
+    alert("Report not found!");
+    return;
   }
+
+  // modal data
+  document.getElementById("modalId").textContent = item.referenceId;
+  document.getElementById("modalCategory").textContent = item.category;
+  document.getElementById("modalLocation").textContent = item.location;
+  document.getElementById("modalUrgency").textContent =
+    item.urgency || "Not set";
+  document.getElementById("modalStatus").textContent = item.status;
+  document.getElementById("modalDate").textContent = item.date;
+  document.getElementById("modalName").textContent =
+    item.reporterName || "Not provided";
+  document.getElementById("modalPhone").textContent =
+    item.reporterPhone || "Not provided";
+  document.getElementById("modalDescription").textContent =
+    item.description || "No description";
+
+  // Show the modal
+  document.getElementById("viewModal").style.display = "flex";
 }
+
+// Close the modal
+function closeModal() {
+  document.getElementById("viewModal").style.display = "none";
+}
+
+// Close modal when clicking outside of it
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("viewModal");
+  if (e.target === modal) {
+    closeModal();
+  }
+});
 
 // Open edit status
 function openEdit(id) {
