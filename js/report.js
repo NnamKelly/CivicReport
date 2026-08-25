@@ -1,4 +1,4 @@
-// Character counter
+// numb of chharacters
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,7 +6,7 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// Show selected files
+// selected files
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
@@ -21,15 +21,60 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// Use Current Location
+// current location
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
-    document.getElementById("location").value = "Current Location";
-    alert("Location detected!");
+    const locationInput = document.getElementById("location");
+    const btn = document.getElementById("useLocationBtn");
+
+    // Check if browser supports geolocation
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    // Show loading state
+    btn.textContent = "Detecting...";
+    btn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      // Success
+      function (position) {
+        const lat = position.coords.latitude.toFixed(6);
+        const lng = position.coords.longitude.toFixed(6);
+
+        locationInput.value = `Lat: ${lat}, Lng: ${lng}`;
+
+        btn.textContent = "Use Current Location";
+        btn.disabled = false;
+        alert("Location detected successfully!");
+      },
+      // Error
+      function (error) {
+        btn.textContent = "Use Current Location";
+        btn.disabled = false;
+
+        if (error.code === error.PERMISSION_DENIED) {
+          alert("Location access denied. Please allow location permission.");
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          alert("Location information is unavailable.");
+        } else if (error.code === error.TIMEOUT) {
+          alert("Location request timed out.");
+        } else {
+          alert("An unknown error occurred while getting location.");
+        }
+      },
+      // Options
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      },
+    );
   });
 
-// ========== FORM SUBMIT ==========
+// submit form
 document.getElementById("reportForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -56,20 +101,19 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     return;
   }
 
-  // Simple phone validation
   if (reporterPhone.length < 10) {
     alert("Please enter a valid telephone number!");
     return;
   }
 
-  // Function to save the report
+  // Save report function
   function saveReport(imageData) {
     const refId = "CR-" + Date.now().toString().slice(-6);
 
     const report = {
       referenceId: refId,
-      reporterName: reporterName, // ← saved for admin
-      reporterPhone: reporterPhone, // ← saved for admin
+      reporterName: reporterName,
+      reporterPhone: reporterPhone,
       category: category,
       urgency: urgency,
       location: location,
@@ -79,13 +123,8 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
       image: imageData || null,
     };
 
-    // Get existing reports
     let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
-
-    // Add new report
     reports.push(report);
-
-    // Save to localStorage
     localStorage.setItem("civicReports", JSON.stringify(reports));
 
     alert("Report submitted successfully!\n\nYour Reference ID: " + refId);
@@ -96,14 +135,14 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     fileList.innerHTML = "";
   }
 
-  // Handle image upload
+  // Handle image
   if (photoInput.files && photoInput.files[0]) {
     const reader = new FileReader();
     reader.onload = function (event) {
-      saveReport(event.target.result); // save with image
+      saveReport(event.target.result);
     };
     reader.readAsDataURL(photoInput.files[0]);
   } else {
-    saveReport(null); // save without image
+    saveReport(null);
   }
 });
