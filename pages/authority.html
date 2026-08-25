@@ -203,6 +203,67 @@
         </div>
 
     </div>
+
+
+    <!-- modal -->
+    <section>
+        <div id="viewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Report Details</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="detail-row">
+                        <span class="label">Reference ID:</span>
+                        <span id="modalId">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Category:</span>
+                        <span id="modalCategory">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Location:</span>
+                        <span id="modalLocation">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Urgency:</span>
+                        <span id="modalUrgency">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Status:</span>
+                        <span id="modalStatus">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span id="modalDate">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Reported By</h3>
+                    <div class="detail-row">
+                        <span class="label">Name:</span>
+                        <span id="modalName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Phone:</span>
+                        <span id="modalPhone">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Description</h3>
+                    <p id="modalDescription" class="description-text">-</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="close-modal-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="../js/autho.js"></script>
 </body>
 

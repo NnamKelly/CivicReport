@@ -113,27 +113,44 @@ function changeStatus(id, newStatus) {
   showReports();
   alert("Status changed to: " + newStatus);
 }
-
-// ========== VIEW DETAILS (NOW SHOWS REPORTER INFO) ==========
 function viewReport(id) {
   const report = allReports.find((r) => r.referenceId === id);
 
-  if (report) {
-    alert(
-      `📋 Report Details\n\n` +
-        `ID: ${report.referenceId}\n` +
-        `Category: ${report.category}\n` +
-        `Location: ${report.location}\n` +
-        `Urgency: ${report.urgency || "Not set"}\n` +
-        `Status: ${report.status}\n` +
-        `Date: ${report.date}\n\n` +
-        `👤 Reported by:\n` +
-        `Name: ${report.reporterName || "Not provided"}\n` +
-        `Phone: ${report.reporterPhone || "Not provided"}\n\n` +
-        `Description:\n${report.description || "No description"}`,
-    );
+  if (!report) {
+    alert("Report not found!");
+    return;
   }
+
+  // modal data
+  document.getElementById("modalId").textContent = report.referenceId;
+  document.getElementById("modalCategory").textContent = report.category || "-";
+  document.getElementById("modalLocation").textContent = report.location || "-";
+  document.getElementById("modalUrgency").textContent =
+    report.urgency || "Not set";
+  document.getElementById("modalStatus").textContent = report.status || "-";
+  document.getElementById("modalDate").textContent = report.date || "-";
+  document.getElementById("modalName").textContent =
+    report.reporterName || "Not provided";
+  document.getElementById("modalPhone").textContent =
+    report.reporterPhone || "Not provided";
+  document.getElementById("modalDescription").textContent =
+    report.description || "No description";
+
+  // Show modal
+  document.getElementById("viewModal").style.display = "flex";
 }
+
+function closeModal() {
+  document.getElementById("viewModal").style.display = "none";
+}
+
+// Close when clicking outside
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("viewModal");
+  if (e.target === modal) {
+    closeModal();
+  }
+});
 
 function filterStatus(status) {
   currentFilter = status;
