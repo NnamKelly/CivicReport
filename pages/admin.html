@@ -284,7 +284,7 @@
 
     <!-- modal -->
     <section>
-        <!-- View Details Modal -->
+        <!-- view detalis -->
         <div id="viewModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -338,6 +338,39 @@
 
                 <div class="modal-footer">
                     <button class="close-modal-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- edit -->
+        <!-- Edit Status Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Change Status</h2>
+                    <button class="close-btn" onclick="closeEditModal()">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p style="margin-bottom: 12px; color: #6b7280;">
+                        Editing: <strong id="editReportId">-</strong>
+                    </p>
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select New Status</label>
+                    <select id="newStatusSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                        <option value="Reported">Reported</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="close-modal-btn" style="background:#e5e7eb; color:#1f2937;"
+                        onclick="closeEditModal()">Cancel</button>
+                    <button class="close-modal-btn" onclick="saveStatus()">Save Changes</button>
                 </div>
             </div>
         </div>

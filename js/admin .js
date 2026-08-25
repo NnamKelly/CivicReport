@@ -145,7 +145,7 @@ function viewItem(id) {
     return;
   }
 
-  // modal data
+  // modal
   document.getElementById("modalId").textContent = item.referenceId;
   document.getElementById("modalCategory").textContent = item.category;
   document.getElementById("modalLocation").textContent = item.location;
@@ -177,7 +177,9 @@ window.addEventListener("click", function (e) {
   }
 });
 
-// Open edit status
+// Open edit statuslet editingId = null;
+
+// Open Edit Modal
 function openEdit(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
 
@@ -186,31 +188,43 @@ function openEdit(id) {
     return;
   }
 
-  const newStatus = prompt(
-    `Change status for ${id}\n\nCurrent status: ${item.status}\n\nType one of these:\n- Pending\n- Under Review\n- In Progress\n- Reported\n- Resolved`,
-    item.status,
-  );
+  editingId = id;
 
-  if (newStatus === null || newStatus.trim() === "") {
-    return;
-  }
+  // Show current report ID
+  document.getElementById("editReportId").textContent = id;
 
-  updateStatus(id, newStatus.trim());
+  // Set the current status in the dropdown
+  document.getElementById("newStatusSelect").value = item.status;
+
+  // Show the modal
+  document.getElementById("editModal").style.display = "flex";
 }
 
-// Update status
-function updateStatus(id, newStatus) {
+// Close Edit Modal
+function closeEditModal() {
+  document.getElementById("editModal").style.display = "none";
+  editingId = null;
+}
+
+// Save the new status
+function saveStatus() {
+  const newStatus = document.getElementById("newStatusSelect").value;
+
+  if (!editingId) return;
+
+  // Update in memory
   allIncidents = allIncidents.map(function (item) {
-    if (item.referenceId === id) {
+    if (item.referenceId === editingId) {
       item.status = newStatus;
     }
     return item;
   });
 
+  // Update in localStorage
   let savedReports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
   savedReports = savedReports.map(function (report) {
-    if (report.referenceId === id) {
+    if (report.referenceId === editingId) {
       report.status = newStatus;
     }
     return report;
@@ -218,13 +232,30 @@ function updateStatus(id, newStatus) {
 
   localStorage.setItem("civicReports", JSON.stringify(savedReports));
 
+  // Refresh the page data
   filteredIncidents = [...allIncidents];
   updateStats();
   applyFilters();
   renderTable();
 
+  // Close modal
+  closeEditModal();
+
   alert("✅ Status successfully changed to: " + newStatus);
 }
+
+// Close modal when clicking outside
+window.addEventListener("click", function (e) {
+  const viewModal = document.getElementById("viewModal");
+  const editModal = document.getElementById("editModal");
+
+  if (e.target === viewModal) {
+    closeModal();
+  }
+  if (e.target === editModal) {
+    closeEditModal();
+  }
+});
 
 function downloadCSV() {
   let csv = "ID,Date,Category,Location,Status,Reporter Name,Reporter Phone\n";
