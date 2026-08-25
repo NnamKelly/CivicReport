@@ -34,7 +34,8 @@ function showReports() {
       (r) =>
         (r.category && r.category.toLowerCase().includes(search)) ||
         (r.location && r.location.toLowerCase().includes(search)) ||
-        (r.referenceId && r.referenceId.toLowerCase().includes(search)),
+        (r.referenceId && r.referenceId.toLowerCase().includes(search)) ||
+        (r.reporterName && r.reporterName.toLowerCase().includes(search)),
     );
   }
 
@@ -46,8 +47,6 @@ function showReports() {
     return;
   }
 
-  // ========== SHOW ONLY 3 REPORTS AT A TIME ==========
-  // The container will be scrollable so user can see the rest
   filtered.forEach(function (report) {
     let priorityClass = "medium";
     let priorityText = "MEDIUM PRIORITY";
@@ -70,6 +69,12 @@ function showReports() {
       </div>
       <div class="report-title">${report.category}</div>
       <div class="report-desc">${report.description || "No description"}</div>
+      
+      <div style="font-size:13px; color:#64748b; margin-bottom:10px;">
+        👤 <strong>${report.reporterName || "Unknown"}</strong> 
+        ${report.reporterPhone ? "• " + report.reporterPhone : ""}
+      </div>
+
       <div class="report-bottom">
         <span class="location">📍 ${report.location || "Unknown"}</span>
         <div class="btns">
@@ -109,24 +114,23 @@ function changeStatus(id, newStatus) {
   alert("Status changed to: " + newStatus);
 }
 
+// ========== VIEW DETAILS (NOW SHOWS REPORTER INFO) ==========
 function viewReport(id) {
   const report = allReports.find((r) => r.referenceId === id);
+
   if (report) {
     alert(
-      "ID: " +
-        report.referenceId +
-        "\n" +
-        "Category: " +
-        report.category +
-        "\n" +
-        "Location: " +
-        report.location +
-        "\n" +
-        "Status: " +
-        report.status +
-        "\n" +
-        "Date: " +
-        report.date,
+      `📋 Report Details\n\n` +
+        `ID: ${report.referenceId}\n` +
+        `Category: ${report.category}\n` +
+        `Location: ${report.location}\n` +
+        `Urgency: ${report.urgency || "Not set"}\n` +
+        `Status: ${report.status}\n` +
+        `Date: ${report.date}\n\n` +
+        `👤 Reported by:\n` +
+        `Name: ${report.reporterName || "Not provided"}\n` +
+        `Phone: ${report.reporterPhone || "Not provided"}\n\n` +
+        `Description:\n${report.description || "No description"}`,
     );
   }
 }
