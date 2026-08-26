@@ -1,3 +1,19 @@
+const reportRole = new URLSearchParams(window.location.search).get("from");
+const reportDashboard = ["admin", "authority", "user"].includes(reportRole)
+  ? reportRole
+  : "user";
+
+document.getElementById("dashboardLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("myReportsLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("statisticsLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("publicFeedLink").href =
+  `../pages/community.html?from=${reportDashboard}`;
+document.getElementById("newReportLink").href =
+  `../pages/report.html?from=${reportDashboard}`;
+
 // ====================== CHARACTER COUNTER ======================
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");

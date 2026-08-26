@@ -1,3 +1,21 @@
+const communityRole = new URLSearchParams(window.location.search).get("from");
+const communityDashboard = ["admin", "authority", "user"].includes(
+  communityRole,
+)
+  ? communityRole
+  : "user";
+
+document.getElementById("dashboardLink").href =
+  `../pages/${communityDashboard}.html`;
+document.getElementById("myReportsLink").href =
+  `../pages/${communityDashboard}.html`;
+document.getElementById("statisticsLink").href =
+  `../pages/${communityDashboard}.html`;
+document.getElementById("publicFeedLink").href =
+  `../pages/community.html?from=${communityDashboard}`;
+document.getElementById("newReportLink").href =
+  `../pages/report.html?from=${communityDashboard}`;
+
 let allReports = [];
 let filteredReports = [];
 let currentFilter = "all";
