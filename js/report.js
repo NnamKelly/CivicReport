@@ -1,4 +1,4 @@
-// numb of chharacters
+// ====================== CHARACTER COUNTER ======================
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,7 +6,7 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// selected files
+// ====================== SHOW SELECTED FILES ======================
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
@@ -21,25 +21,22 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// current location
+// ====================== USE CURRENT LOCATION ======================
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
     const locationInput = document.getElementById("location");
     const btn = document.getElementById("useLocationBtn");
 
-    // Check if browser supports geolocation
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
       return;
     }
 
-    // Show loading state
     btn.textContent = "Detecting...";
     btn.disabled = true;
 
     navigator.geolocation.getCurrentPosition(
-      // Success
       function (position) {
         const lat = position.coords.latitude.toFixed(6);
         const lng = position.coords.longitude.toFixed(6);
@@ -50,7 +47,6 @@ document
         btn.disabled = false;
         alert("Location detected successfully!");
       },
-      // Error
       function (error) {
         btn.textContent = "Use Current Location";
         btn.disabled = false;
@@ -65,7 +61,6 @@ document
           alert("An unknown error occurred while getting location.");
         }
       },
-      // Options
       {
         enableHighAccuracy: true,
         timeout: 10000,
@@ -74,11 +69,10 @@ document
     );
   });
 
-// submit form
+// ====================== FORM SUBMIT ======================
 document.getElementById("reportForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // Get values
   const reporterName = document.getElementById("reporterName").value.trim();
   const reporterPhone = document.getElementById("reporterPhone").value.trim();
   const category = document.getElementById("category").value;
@@ -106,12 +100,10 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     return;
   }
 
-  // Save report function
+  // Save report
   function saveReport(imageData) {
-    const refId = "CR-" + Date.now().toString().slice(-6);
-
     const report = {
-      referenceId: refId,
+      referenceId: "CR-" + Date.now().toString().slice(-6),
       reporterName: reporterName,
       reporterPhone: reporterPhone,
       category: category,
@@ -127,7 +119,10 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     reports.push(report);
     localStorage.setItem("civicReports", JSON.stringify(reports));
 
-    alert("Report submitted successfully!\n\nYour Reference ID: " + refId);
+    alert(
+      "Report submitted successfully!\n\nYour Reference ID: " +
+        report.referenceId,
+    );
 
     // Clear form
     document.getElementById("reportForm").reset();
@@ -135,7 +130,7 @@ document.getElementById("reportForm").addEventListener("submit", function (e) {
     fileList.innerHTML = "";
   }
 
-  // Handle image
+  // Handle image upload
   if (photoInput.files && photoInput.files[0]) {
     const reader = new FileReader();
     reader.onload = function (event) {
