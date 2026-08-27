@@ -44,16 +44,16 @@ navLinks.className = `
 const links = [
   {
     text: "Public Feed",
-    href: "index.html",
+    href: "../pages/community.html",
   },
   {
     text: "About",
-    href: "../pages/signup.html",
+    href: "#",
   },
 
   {
     text: "Contact",
-    href: "../pages/signup.html",
+    href: "../pages/report.html",
   },
 ];
 
@@ -72,21 +72,21 @@ links.forEach((link) => {
         hover:text-[#1769aa]
     `;
 
-  // // Check active page
-  // const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  // if (currentPage === link.href) {
-  //   a.classList.remove("text-gray-600");
-  //   a.classList.add(
-  //     "text-[#1769aa]",
-  //     "after:content-['']",
-  //     "after:absolute",
-  //     "after:left-0",
-  //     "after:bottom-4",
-  //     "after:w-full",
-  //     "after:h-[2px]",
-  //     "after:bg-[#1769aa]",
-  //   );
-  // }
+  // Check active page
+  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  if (currentPage === link.href) {
+    a.classList.remove("text-gray-600");
+    a.classList.add(
+      "text-[#1769aa]",
+      "after:content-['']",
+      "after:absolute",
+      "after:left-0",
+      "after:bottom-4",
+      "after:w-full",
+      "after:h-[2px]",
+      "after:bg-[#1769aa]",
+    );
+  }
   navLinks.appendChild(a);
 });
 
@@ -101,7 +101,7 @@ navRight.className = `
 
 // sbtn
 const signIn = document.createElement("a");
-signIn.href = "../pages/login.html";
+signIn.href = "../pages/signup.html";
 signIn.textContent = "Sign In";
 signIn.className = `
     text-[15px]
@@ -115,7 +115,7 @@ signIn.className = `
 
 // incident btn
 const reportButton = document.createElement("a");
-reportButton.href = "../pages/login.html";
+reportButton.href = "../pages/report.html";
 reportButton.className = `
     flex
     items-center

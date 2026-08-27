@@ -15,9 +15,13 @@ function loadData() {
       category: r.category || "Unknown",
       location: r.location || "Not specified",
       status: r.status || "Reported",
+      description: r.description || "No description",
+      urgency: r.urgency || "Not set",
+      reporterName: r.reporterName || "Not provided", // ← added
+      reporterPhone: r.reporterPhone || "Not provided", // ← added
     }));
   } else {
-    allIncidents = [...sampleData];
+    allIncidents = [];
   }
 
   filteredIncidents = [...allIncidents];
@@ -26,7 +30,7 @@ function loadData() {
 }
 
 function updateStats() {
-  const total = allIncidents.length || 1; // prevent division by zero
+  const total = allIncidents.length || 1;
 
   document.getElementById("totalReports").textContent =
     allIncidents.length.toLocaleString();
@@ -45,7 +49,6 @@ function updateStats() {
     }
   });
 
-  // Update numbers
   document.getElementById("openCount").textContent = open;
   document.getElementById("reviewCount").textContent = review;
   document.getElementById("resolvedCount").textContent = resolved;
@@ -54,33 +57,20 @@ function updateStats() {
     allIncidents.length,
   );
 
-  // ========== UPDATE BARS ==========
+  // Update bars
   const openPercent = Math.round((open / total) * 100);
   const reviewPercent = Math.round((review / total) * 100);
   const resolvedPercent = Math.round((resolved / total) * 100);
 
-  document.getElementById("openBar").style.width = openPercent + "%";
-  document.getElementById("reviewBar").style.width = reviewPercent + "%";
-  document.getElementById("resolvedBar").style.width = resolvedPercent + "%";
-}
-
-// ========== PERCENTAGE BARS ==========
-function updateBars(open, review, resolved, total) {
-  if (total === 0) total = 1; // prevent division by zero
-
-  const openPercent = Math.round((open / total) * 100);
-  const reviewPercent = Math.round((review / total) * 100);
-  const resolvedPercent = Math.round((resolved / total) * 100);
-
-  // You can add these elements in your HTML if you want visible bars
-  // Example: <div class="bar" id="openBar"></div>
-  const openBar = document.getElementById("openBar");
-  const reviewBar = document.getElementById("reviewBar");
-  const resolvedBar = document.getElementById("resolvedBar");
-
-  if (openBar) openBar.style.width = openPercent + "%";
-  if (reviewBar) reviewBar.style.width = reviewPercent + "%";
-  if (resolvedBar) resolvedBar.style.width = resolvedPercent + "%";
+  if (document.getElementById("openBar")) {
+    document.getElementById("openBar").style.width = openPercent + "%";
+  }
+  if (document.getElementById("reviewBar")) {
+    document.getElementById("reviewBar").style.width = reviewPercent + "%";
+  }
+  if (document.getElementById("resolvedBar")) {
+    document.getElementById("resolvedBar").style.width = resolvedPercent + "%";
+  }
 }
 
 function getBadge(status) {
@@ -102,21 +92,21 @@ function renderTable() {
   const pageData = filteredIncidents.slice(start, start + perPage);
 
   if (pageData.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#94a3b8;">No incidents found</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#94a3b8;">No incidents found</td></tr>`;
   } else {
     pageData.forEach((item) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-          <td><strong>${item.referenceId}</strong></td>
-          <td>${item.date}</td>
-          <td>${item.category}</td>
-          <td>${item.location}</td>
-          <td>${getBadge(item.status)}</td>
-          <td>
-            <button class="action-btn" onclick="viewItem('${item.referenceId}')">👁️</button>
-            <button class="action-btn" onclick="openEdit('${item.referenceId}')">✏️</button>
-          </td>
-        `;
+        <td><strong>${item.referenceId}</strong></td>
+        <td>${item.date}</td>
+        <td>${item.category}</td>
+        <td>${item.location}</td>
+        <td>${getBadge(item.status)}</td>
+        <td>
+          <button class="action-btn" onclick="viewItem('${item.referenceId}')">👁️</button>
+          <button class="action-btn" onclick="openEdit('${item.referenceId}')">✏️</button>
+        </td>
+      `;
       tbody.appendChild(row);
     });
   }
@@ -134,7 +124,8 @@ function applyFilters() {
     const matchSearch =
       item.referenceId.toLowerCase().includes(search) ||
       item.location.toLowerCase().includes(search) ||
-      item.category.toLowerCase().includes(search);
+      item.category.toLowerCase().includes(search) ||
+      (item.reporterName && item.reporterName.toLowerCase().includes(search));
 
     const matchCategory = category === "All" || item.category === category;
     const matchStatus = status === "All" || item.status === status;
@@ -146,21 +137,49 @@ function applyFilters() {
   renderTable();
 }
 
-// ========== VIEW REPORT ==========
+// view report
 function viewItem(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
-  if (item) {
-    alert(
-      `Report Details\n\n` +
-        `ID: ${item.referenceId}\n` +
-        `Category: ${item.category}\n` +
-        `Location: ${item.location}\n` +
-        `Status: ${item.status}\n` +
-        `Date: ${item.date}`,
-    );
+  if (!item) {
+    alert("Report not found!");
+    return;
   }
+
+  // modal
+  document.getElementById("modalId").textContent = item.referenceId;
+  document.getElementById("modalCategory").textContent = item.category;
+  document.getElementById("modalLocation").textContent = item.location;
+  document.getElementById("modalUrgency").textContent =
+    item.urgency || "Not set";
+  document.getElementById("modalStatus").textContent = item.status;
+  document.getElementById("modalDate").textContent = item.date;
+  document.getElementById("modalName").textContent =
+    item.reporterName || "Not provided";
+  document.getElementById("modalPhone").textContent =
+    item.reporterPhone || "Not provided";
+  document.getElementById("modalDescription").textContent =
+    item.description || "No description";
+
+  // Show the modal
+  document.getElementById("viewModal").style.display = "flex";
 }
-// ========== OPEN EDIT (when clicking the pencil icon) ==========
+
+// Close the modal
+function closeModal() {
+  document.getElementById("viewModal").style.display = "none";
+}
+
+// Close modal when clicking outside of it
+window.addEventListener("click", function (e) {
+  const modal = document.getElementById("viewModal");
+  if (e.target === modal) {
+    closeModal();
+  }
+});
+
+// Open edit statuslet editingId = null;
+
+// Open Edit Modal
 function openEdit(id) {
   const item = allIncidents.find((i) => i.referenceId === id);
 
@@ -169,54 +188,79 @@ function openEdit(id) {
     return;
   }
 
-  const newStatus = prompt(
-    `Change status for ${id}\n\nCurrent status: ${item.status}\n\nType one of these exactly:\n- Pending\n- Under Review\n- In Progress\n- Reported\n- Resolved`,
-    item.status,
-  );
+  editingId = id;
 
-  if (newStatus === null || newStatus.trim() === "") {
-    return; // User cancelled
-  }
+  // Show current report ID
+  document.getElementById("editReportId").textContent = id;
 
-  updateStatus(id, newStatus.trim());
+  // Set the current status in the dropdown
+  document.getElementById("newStatusSelect").value = item.status;
+
+  // Show the modal
+  document.getElementById("editModal").style.display = "flex";
 }
 
-// ========== UPDATE STATUS (the important part) ==========
-function updateStatus(id, newStatus) {
-  // 1. Update the data in memory
+// Close Edit Modal
+function closeEditModal() {
+  document.getElementById("editModal").style.display = "none";
+  editingId = null;
+}
+
+// Save the new status
+function saveStatus() {
+  const newStatus = document.getElementById("newStatusSelect").value;
+
+  if (!editingId) return;
+
+  // Update in memory
   allIncidents = allIncidents.map(function (item) {
-    if (item.referenceId === id) {
+    if (item.referenceId === editingId) {
       item.status = newStatus;
     }
     return item;
   });
 
-  // 2. Also update localStorage so the change is permanent
+  // Update in localStorage
   let savedReports = JSON.parse(localStorage.getItem("civicReports")) || [];
 
   savedReports = savedReports.map(function (report) {
-    if (report.referenceId === id) {
+    if (report.referenceId === editingId) {
       report.status = newStatus;
     }
     return report;
   });
 
-  // Save back to localStorage
   localStorage.setItem("civicReports", JSON.stringify(savedReports));
 
-  // 3. Refresh everything on the page
+  // Refresh the page data
   filteredIncidents = [...allIncidents];
   updateStats();
-  applyFilters(); // this will re-render the table
+  applyFilters();
   renderTable();
+
+  // Close modal
+  closeEditModal();
 
   alert("✅ Status successfully changed to: " + newStatus);
 }
 
+// Close modal when clicking outside
+window.addEventListener("click", function (e) {
+  const viewModal = document.getElementById("viewModal");
+  const editModal = document.getElementById("editModal");
+
+  if (e.target === viewModal) {
+    closeModal();
+  }
+  if (e.target === editModal) {
+    closeEditModal();
+  }
+});
+
 function downloadCSV() {
-  let csv = "ID,Date,Category,Location,Status\n";
+  let csv = "ID,Date,Category,Location,Status,Reporter Name,Reporter Phone\n";
   allIncidents.forEach((i) => {
-    csv += `${i.referenceId},${i.date},${i.category},${i.location},${i.status}\n`;
+    csv += `${i.referenceId},${i.date},${i.category},${i.location},${i.status},${i.reporterName},${i.reporterPhone}\n`;
   });
   const blob = new Blob([csv], { type: "text/csv" });
   const a = document.createElement("a");

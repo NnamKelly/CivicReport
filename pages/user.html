@@ -39,7 +39,7 @@
         <!-- menu -->
         <ul class="menu">
             <li>
-                <a href="../pages/report.html" class="active">
+                <a href="../pages/admin.html">
                     <!-- dashboard icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -52,7 +52,7 @@
             </li>
 
             <li>
-                <a href="../pages/community.html">
+                <a href="../pages/community.html?from=user">
                     <!-- public icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M4 11a9 9 0 0 1 9 9" />
@@ -64,7 +64,7 @@
             </li>
 
             <li>
-                <a href="../pages/user.html">
+                <a href="../pages/user.html" class="active">
                     <!-- report icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -116,7 +116,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="../pages/logout.html">
                     <!-- Logout Icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -143,23 +143,55 @@
 
             <!-- Total Reports -->
             <div class="card">
-                <div class="card-title">TOTAL REPORTS</div>
-                <span class="card-number" id="totalReports">0</span>
-                <span class="card-info green">+12%</span>
+                <div class="flex">
+                    <div class="card-title">TOTAL <br>REPORTS</div>
+                    <div class="svg"> <svg class="blue" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <path d="M14 2v6h6" />
+                            <path d="M16 13H8" />
+                            <path d="M16 17H8" />
+                            <path d="M10 9H8" />
+                        </svg></div>
+                </div>
+                <div class="flexs">
+
+                    <span class="card-number" id="totalReports">0</span>
+                    <span class="card-info green">+12%</span>
+                </div>
             </div>
 
             <!-- Open Incidents -->
             <div class="card">
-                <div class="card-title">OPEN INCIDENTS</div>
-                <span class="card-number" id="openIncidents">0</span>
-                <span class="card-info orange">Action required</span>
+                <div class="flex">
+                    <div class="card-title">OPEN <br>INCIDENTS</div>
+                    <div class="svg">
+                        <svg class="brown" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path
+                                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="flexs gap">
+
+                    <span class="card-number" id="openIncidents">0</span>
+                    <span class="card-info">Action required</span>
+                </div>
             </div>
 
             <!-- Resolved -->
-            <div class="card">
-                <div class="card-title">RESOLVED</div>
-                <span class="card-number" id="resolvedCount">0</span>
-                <span class="card-info gray">This month</span>
+            <div class="card resolve">
+                <div class="flex">
+                    <div class="card-title">RESOLVED</div>
+                    <div class="svg ">
+                        <svg class="green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="flexs2 gap"><span class="card-number" id="resolvedCount">0</span>
+                    <span class="card-info">This Month</span>
+                </div>
             </div>
 
             <!-- Impact Score (Taller) -->

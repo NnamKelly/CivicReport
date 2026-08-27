@@ -1,4 +1,20 @@
-// nub of char
+const reportRole = new URLSearchParams(window.location.search).get("from");
+const reportDashboard = ["admin", "authority", "user"].includes(reportRole)
+  ? reportRole
+  : "user";
+
+document.getElementById("dashboardLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("myReportsLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("statisticsLink").href =
+  `../pages/${reportDashboard}.html`;
+document.getElementById("publicFeedLink").href =
+  `../pages/community.html?from=${reportDashboard}`;
+document.getElementById("newReportLink").href =
+  `../pages/report.html?from=${reportDashboard}`;
+
+// ====================== CHARACTER COUNTER ======================
 const description = document.getElementById("description");
 const charCount = document.getElementById("charCount");
 
@@ -6,13 +22,14 @@ description.addEventListener("input", function () {
   charCount.textContent = this.value.length;
 });
 
-// select
+// ====================== SHOW SELECTED FILES ======================
 const photosInput = document.getElementById("photos");
 const fileList = document.getElementById("fileList");
 
 photosInput.addEventListener("change", function () {
   fileList.innerHTML = "";
   const files = Array.from(this.files).slice(0, 3);
+
   files.forEach(function (file) {
     const p = document.createElement("p");
     p.textContent = "📷 " + file.name;
@@ -20,92 +37,123 @@ photosInput.addEventListener("change", function () {
   });
 });
 
-// current location
+// ====================== USE CURRENT LOCATION ======================
 document
   .getElementById("useLocationBtn")
   .addEventListener("click", function () {
-    document.getElementById("location").value = "Current Location";
-    alert("Location detected!");
+    const locationInput = document.getElementById("location");
+    const btn = document.getElementById("useLocationBtn");
+
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser.");
+      return;
+    }
+
+    btn.textContent = "Detecting...";
+    btn.disabled = true;
+
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude.toFixed(6);
+        const lng = position.coords.longitude.toFixed(6);
+
+        locationInput.value = `Lat: ${lat}, Lng: ${lng}`;
+
+        btn.textContent = "Use Current Location";
+        btn.disabled = false;
+        alert("Location detected successfully!");
+      },
+      function (error) {
+        btn.textContent = "Use Current Location";
+        btn.disabled = false;
+
+        if (error.code === error.PERMISSION_DENIED) {
+          alert("Location access denied. Please allow location permission.");
+        } else if (error.code === error.POSITION_UNAVAILABLE) {
+          alert("Location information is unavailable.");
+        } else if (error.code === error.TIMEOUT) {
+          alert("Location request timed out.");
+        } else {
+          alert("An unknown error occurred while getting location.");
+        }
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
+      },
+    );
   });
 
-//edit
-const editReferenceId = new URLSearchParams(window.location.search).get("edit");
-let editingReport = null;
-
-if (editReferenceId) {
-  const reports = JSON.parse(localStorage.getItem("civicReports") || "[]");
-  editingReport = reports.find(
-    (report) => report.referenceId === editReferenceId,
-  );
-
-  if (editingReport) {
-    document.getElementById("category").value = editingReport.category || "";
-    document.getElementById("urgency").value = editingReport.urgency || "";
-    document.getElementById("location").value = editingReport.location || "";
-    document.getElementById("description").value =
-      editingReport.description || "";
-    charCount.textContent = document.getElementById("description").value.length;
-    document.querySelector("#reportForm button[type='submit']").textContent =
-      "Save Changes";
-  }
-}
-
-// submit form
+// ====================== FORM SUBMIT ======================
 document.getElementById("reportForm").addEventListener("submit", function (e) {
-  e.preventDefault(); // stop page refresh
+  e.preventDefault();
 
-  // Get form values
+  const reporterName = document.getElementById("reporterName").value.trim();
+  const reporterPhone = document.getElementById("reporterPhone").value.trim();
   const category = document.getElementById("category").value;
   const urgency = document.getElementById("urgency").value;
-  const location = document.getElementById("location").value;
-  const descriptionValue = document.getElementById("description").value;
+  const location = document.getElementById("location").value.trim();
+  const descriptionValue = document.getElementById("description").value.trim();
+  const photoInput = document.getElementById("photos");
 
   // Validation
-  if (!category || !location || !descriptionValue) {
-    alert("Please fill in all required fields!");
+  if (
+    !reporterName ||
+    !reporterPhone ||
+    !category ||
+    !location ||
+    !descriptionValue
+  ) {
+    alert(
+      "Please fill in all required fields (Name, Phone, Category, Location and Description)!",
+    );
     return;
   }
 
-  // Get existing reports from localStorage
-  let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
-
-  if (editingReport) {
-    const reportIndex = reports.findIndex(
-      (report) => report.referenceId === editingReport.referenceId,
-    );
-    reports[reportIndex] = {
-      ...reports[reportIndex],
-      category,
-      urgency,
-      location,
-      description: descriptionValue,
-    };
-  } else {
-    const refId = "CR-" + Date.now().toString().slice(-6);
-    reports.push({
-      referenceId: refId,
-      category,
-      urgency,
-      location,
-      description: descriptionValue,
-      status: "Reported",
-      date: new Date().toLocaleDateString(),
-    });
+  if (reporterPhone.length < 10) {
+    alert("Please enter a valid telephone number!");
+    return;
   }
 
-  // Save back to localStorage
-  localStorage.setItem("civicReports", JSON.stringify(reports));
+  // Save report
+  function saveReport(imageData) {
+    const report = {
+      referenceId: "CR-" + Date.now().toString().slice(-6),
+      reporterName: reporterName,
+      reporterPhone: reporterPhone,
+      category: category,
+      urgency: urgency,
+      location: location,
+      description: descriptionValue,
+      status: "Reported",
+      date: new Date().toLocaleString(),
+      image: imageData || null,
+    };
 
-  // Success message
-  alert(
-    editingReport
-      ? "Report updated successfully!"
-      : "Report submitted successfully!\n\nYour Reference ID: " +
-          reports[reports.length - 1].referenceId,
-  );
+    let reports = JSON.parse(localStorage.getItem("civicReports")) || [];
+    reports.push(report);
+    localStorage.setItem("civicReports", JSON.stringify(reports));
 
-  // Clear the form
-  document.getElementById("reportForm").reset();
-  charCount.textContent = "0";
-  fileList.innerHTML = "";
+    alert(
+      "Report submitted successfully!\n\nYour Reference ID: " +
+        report.referenceId,
+    );
+
+    // Clear form
+    document.getElementById("reportForm").reset();
+    charCount.textContent = "0";
+    fileList.innerHTML = "";
+  }
+
+  // Handle image upload
+  if (photoInput.files && photoInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      saveReport(event.target.result);
+    };
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    saveReport(null);
+  }
 });

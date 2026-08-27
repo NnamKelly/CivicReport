@@ -10,6 +10,9 @@
 </head>
 
 <body>
+
+
+
     <!-- sidebar section -->
     <section class="sidebar">
         <!-- logo -->
@@ -24,19 +27,17 @@
         </div>
 
         <!-- new rep btn -->
-        <a href="../pages/user.html" class="new-report-btn">
+        <a href="../pages/report.html?from=admin" class="new-report-btn">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M12 5v14M5 12h14" />
             </svg>
             New Report
-        </a href="../pages/user.html">
+        </a>
 
         <!-- menu -->
         <ul class="menu">
             <li>
                 <a href="../pages/admin.html" class="active">
-
-
                     <!-- dashboard icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -50,7 +51,7 @@
             </li>
 
             <li>
-                <a href="../pages/community.html">
+                <a href="../pages/community.html?from=admin">
                     <!-- public icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M4 11a9 9 0 0 1 9 9" />
@@ -76,7 +77,7 @@
             </li>
 
             <li>
-                <a href="../pages/authority.html">
+                <a href="../pages/admin.html">
                     <!-- statistics icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M18 20V10" />
@@ -114,7 +115,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="../pages/logout.html">
                     <!-- Logout Icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -132,13 +133,16 @@
 
         <!-- Header -->
         <div class="header">
-            <div>
-                <h1>System Overview</h1>
-                <p>Real-time incident tracking and community safety metrics.</p>
-            </div>
-            <div class="header-buttons">
-                <button onclick="downloadCSV()">↓ CSV</button>
-                <button onclick="downloadJSON()">{ } JSON</button>
+
+            <h1>System Overview</h1>
+            <div class="flex">
+                <div>
+                    <p>Real-time incident tracking and community safety metrics.</p>
+                </div>
+                <div class="header-buttons">
+                    <button onclick="downloadCSV()">↓ CSV</button>
+                    <button onclick="downloadJSON()">{ } JSON</button>
+                </div>
             </div>
         </div>
 
@@ -249,12 +253,12 @@
                 </h3>
                 <div class="col">
                     <div class="col1">
-                        <div class="category-item">Infrastructure Damage <span>✏️</span></div>
-                        <div class="category-item">Safety Hazard <span>✏️</span></div>
+                        <div class="category-item">Infrastructure Damage <span>🖊</span></div>
+                        <div class="category-item">Safety Hazard <span>🖊</span></div>
                     </div>
                     <div class="col2">
-                        <div class="category-item">Noise Complaint <span>✏️</span></div>
-                        <div class="category-item">Vandalism <span>✏️</span></div>
+                        <div class="category-item">Noise Complaint <span>🖊</span></div>
+                        <div class="category-item">Vandalism <span>🖊</span></div>
                     </div>
                 </div>
             </div>
@@ -276,7 +280,99 @@
 
     </div>
 
+    <!-- modal -->
+    <section>
+        <!-- view detalis -->
+        <div id="viewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Report Details</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
 
+                <div class="modal-body">
+                    <div class="detail-row">
+                        <span class="label">Reference ID:</span>
+                        <span id="modalId">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Category:</span>
+                        <span id="modalCategory">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Location:</span>
+                        <span id="modalLocation">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Urgency:</span>
+                        <span id="modalUrgency">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Status:</span>
+                        <span id="modalStatus">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span id="modalDate">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Reported By</h3>
+                    <div class="detail-row">
+                        <span class="label">Name:</span>
+                        <span id="modalName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Phone:</span>
+                        <span id="modalPhone">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Description</h3>
+                    <p id="modalDescription" class="description-text">-</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="close-modal-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- edit -->
+        <!-- Edit Status Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Change Status</h2>
+                    <button class="close-btn" onclick="closeEditModal()">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <p style="margin-bottom: 12px; color: #6b7280;">
+                        Editing: <strong id="editReportId">-</strong>
+                    </p>
+
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select New Status</label>
+                    <select id="newStatusSelect" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm">
+                        <option value="Reported">Reported</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Under Review">Under Review</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="close-modal-btn" style="background:#e5e7eb; color:#1f2937;"
+                        onclick="closeEditModal()">Cancel</button>
+                    <button class="close-modal-btn" onclick="saveStatus()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <script src="../js/admin .js"></script>
 </body>

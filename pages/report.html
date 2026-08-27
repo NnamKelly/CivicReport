@@ -29,7 +29,7 @@
         </div>
 
         <!-- new rep btn -->
-        <a href="../pages/report.html" class="new-report-btn">
+        <a href="../pages/report.html" class="new-report-btn" id="newReportLink">
             <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M12 5v14M5 12h14" />
             </svg>
@@ -39,7 +39,7 @@
         <!-- menu -->
         <ul class="menu">
             <li>
-                <a href="../pages/report.html" class="active">
+                <a href="../pages/user.html" class="active" id="dashboardLink">
                     <!-- dashboard icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -52,7 +52,7 @@
             </li>
 
             <li>
-                <a href="../pages/community.html">
+                <a href="../pages/community.html" id="publicFeedLink">
                     <!-- public icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M4 11a9 9 0 0 1 9 9" />
@@ -64,7 +64,7 @@
             </li>
 
             <li>
-                <a href="../pages/user.html">
+                <a href="../pages/user.html" id="myReportsLink">
                     <!-- report icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -78,7 +78,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="../pages/user.html" id="statisticsLink">
                     <!-- statistics icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M18 20V10" />
@@ -116,7 +116,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="../pages/logout.html">
                     <!-- Logout Icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -163,6 +163,24 @@
 
             <!-- form -->
             <form id="reportForm" class="space-y-6">
+                <!-- Reporter Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Your Full Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="reporterName" required placeholder="Enter your full name"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Telephone Number <span class="text-red-500">*</span>
+                        </label>
+                        <input type="tel" id="reporterPhone" required placeholder="+237 xxx xxx xxx"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
 
                 <!-- Category -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">

@@ -39,7 +39,7 @@
             </li>
 
             <li>
-                <a href="../pages/community.html">
+                <a href="../pages/community.html?from=authority">
                     <!-- public icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M4 11a9 9 0 0 1 9 9" />
@@ -51,7 +51,7 @@
             </li>
 
             <li>
-                <a href="../pages/user.html">
+                <a href="../pages/authority.html">
                     <!-- report icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -65,7 +65,7 @@
             </li>
 
             <li>
-                <a href="../pages/user.html">
+                <a href="../pages/authority.html">
                     <!-- statistics icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M18 20V10" />
@@ -92,12 +92,12 @@
         <!-- Bottom Links -->
         <ul class="bottom-links">
             <!-- new rep btn -->
-            <button class="new-report-btn">
+            <a href="#" class="new-report-btn">
                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M12 5v14M5 12h14" />
                 </svg>
                 New Report
-            </button>
+            </a>
             <li>
                 <a href="#">
                     <!-- Support Icon -->
@@ -110,7 +110,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="../pages/logout.html">
                     <!-- Logout Icon -->
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
@@ -125,7 +125,145 @@
     </section>
 
 
+    <div class="container">
 
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Authority Dashboard</h1>
+                <p>Real-time incident management and operational overview.</p>
+            </div>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search incidents...">
+            </div>
+        </div>
+
+        <!-- Top Section -->
+        <div class="top">
+
+            <!-- Left Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-title">RESOLVED THIS WEEK
+                        <svg class="green" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="stat-number" id="resolvedCount">0</div>
+                    <div class="stat-sub green">+12% from last week</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">AVG RESOLUTION TIME <svg class="orange" fill="none" stroke="currentColor"
+                            stroke-width="2" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                            <path d="M12 17h.01" />
+                        </svg></div>
+                    <div class="stat-number">4.2 <span style="font-size:16px">hrs</span></div>
+                    <div class="stat-sub gray">Target: &lt; 5.0 hrs</div>
+                </div>
+            </div>
+
+            <!-- Actionable Items -->
+            <div class="action-box">
+                <div class="action-header">
+                    <h2>Actionable Items</h2>
+                    <div class="tabs">
+                        <button class="tab active" onclick="filterStatus('all')">All</button>
+                        <button class="tab" onclick="filterStatus('Reported')">Reported</button>
+                        <button class="tab" onclick="filterStatus('In Progress')">In Progress</button>
+                    </div>
+                </div>
+
+                <div id="reportList">
+                    <!-- Reports will load here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Incident Map -->
+        <div class="map-box">
+            <div class="map-title">Live Incident Map</div>
+            <div class="map-area">
+                <div class="dot red"></div>
+                <div class="dot orange"></div>
+                <div class="dot yellow"></div>
+                <iframe src="" frameborder="0"></iframe>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#ef4444"></div> High Priority
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background:#f97316"></div> Medium Priority
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- modal -->
+    <section>
+        <div id="viewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Report Details</h2>
+                    <button class="close-btn" onclick="closeModal()">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="detail-row">
+                        <span class="label">Reference ID:</span>
+                        <span id="modalId">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Category:</span>
+                        <span id="modalCategory">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Location:</span>
+                        <span id="modalLocation">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Urgency:</span>
+                        <span id="modalUrgency">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Status:</span>
+                        <span id="modalStatus">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Date:</span>
+                        <span id="modalDate">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Reported By</h3>
+                    <div class="detail-row">
+                        <span class="label">Name:</span>
+                        <span id="modalName">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="label">Phone:</span>
+                        <span id="modalPhone">-</span>
+                    </div>
+
+                    <hr>
+
+                    <h3>Description</h3>
+                    <p id="modalDescription" class="description-text">-</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="close-modal-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </section>
     <script src="../js/autho.js"></script>
 </body>
 
