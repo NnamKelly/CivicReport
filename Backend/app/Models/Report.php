@@ -11,9 +11,8 @@ class Report extends Model
         'urgency',
         'category',
         'location',
-        'reporter_id',
         'description',
-        // 'photographic_evidence',
+        'photographic_evidence',
     ];
 
     public function user(): BelongsTo

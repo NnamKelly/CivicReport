@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReportResource;
 use Gate;
 use Illuminate\Http\Request;
 use App\Models\Report;
+use App\Models\User;
 
 class ReportController extends Controller
 {
@@ -14,7 +16,8 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return response()->json(Report::all())->setEncodingOptions(JSON_PRETTY_PRINT);
+        return ReportResource::collection(Report::all());
+
     }
 
     /**
@@ -28,28 +31,34 @@ class ReportController extends Controller
         ]);
 
         $validated = $request->validate([
-            'reporter_id' => ['required', 'integer'],
             'category' => ['required', 'string', '
-                in:infrastructure damage,safety hazard,noise complaint,vandalism,suspiscious activity,other,
+                in:infrastructure damage,theft,safety hazard,noise complaint,vandalism,suspiscious activity,other,
             '],
             'urgency' => ['required', 'string', '
                 in:low,medium,high,critical,
             '],
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'photographic_evidence' => ['string'],
+            'photographic_evidence' => ['nullable', 'image', 'max:5120'],
         ]);
+
+        $path = null;
+        if ($request->hasFile('photographic_evidence')) {
+            $path = $request->file('photographic_evidence')->store('evidence', 'public');
+        }
 
         $report = $request->user()->reports()->create([
             'category' => $validated['category'],
             'urgency' => $validated['urgency'],
-            'reporter_id' => $validated['reporter_id'],
             'location' => $validated['location'],
             'description' => $validated['description'],
-            // 'photographic_evidence' => $validated['photographic_evidence']
+            'photographic_evidence' => $path,
         ]);
+            $report->reporter_id = $request->user()->id;
+            $report->save();
 
-        return response()->json($report, 201)->setEncodingOptions(JSON_PRETTY_PRINT);
+        // return response()->json($report, 201)->setEncodingOptions(JSON_PRETTY_PRINT);
+        return new ReportResource($report);
 
     }
 
@@ -58,13 +67,7 @@ class ReportController extends Controller
      */
     public function show(Report $report)
     {
-        // $data = Report::find($id);
-        // if(!$data){
-        //     return response()->json([
-        //         'error' => 'Report not found'
-        //     ], 404)->setEncodingOptions(JSON_PRETTY_PRINT);
-        // }
-        return response()->json($report, 200)->setEncodingOptions(JSON_PRETTY_PRINT);
+       return new ReportResource($report);
 
     }
 
@@ -75,18 +78,28 @@ class ReportController extends Controller
     {
         Gate::authorize('modify', $report);
 
+        $request->merge([
+            'category' => strtolower($request->category),
+            'urgency' => strtolower($request->urgency),
+        ]);
+
+
         $data = $request->validate([
-            'reporter_id' => ['required', 'integer'],
-            'category' => ['required', 'string'],   //
-            'urgency' => ['required', 'string'],
+            'category' => ['required', 'string', 'in:infrastructure damage,theft,safety hazard,noise complaint,vandalism,suspiscious activity,other,'],
+            'urgency' => ['required', 'string', 'in:low,medium,high,critical'],
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'photographic_evidence' => ['string'],
+            'photographic_evidence' => ['nullable', 'image', 'max:5120'],
         ]);
+
+        $path = null;
+        if ($request->hasFile('photographic_evidence')) {
+            $path = $request->file('photographic_evidence')->store('evidence', 'public');
+        }
 
         $report->update($data);
 
-        return response()->json($report, 200)->setEncodingOptions(JSON_PRETTY_PRINT);
+        return new ReportResource($report);
 
     }
 
@@ -95,7 +108,9 @@ class ReportController extends Controller
      */
     public function destroy(Report $report)
     {
-        Gate::authorize('modify', $report);
+         Gate::authorize('modify', $report);
+
+        $report->delete();
 
         return response()->json([
             'message' => 'The post was deleted'

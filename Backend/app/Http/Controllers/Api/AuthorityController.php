@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Report;
 use Illuminate\Http\Response;
+use App\Http\Resources\ReportResource;
 
 class AuthorityController extends Controller
 {
@@ -14,7 +15,7 @@ class AuthorityController extends Controller
      */
     public function index()
     {
-        return response()->json(Report::all())->setEncodingOptions(JSON_PRETTY_PRINT);
+        return ReportResource::collection(Report::all());
     }
 
     /**
@@ -30,7 +31,7 @@ class AuthorityController extends Controller
      */
     public function show(Report $report)
     {
-        return response()->json($report, 200)->setEncodingOptions(JSON_PRETTY_PRINT);
+       return new ReportResource($report);
     }
 
     /**

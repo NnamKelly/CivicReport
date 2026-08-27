@@ -61,7 +61,7 @@ class ReportPolicy
      */
     public function modify(User $user, Report $report): Response
     {
-        return $user->id === $report->id
+        return $user->id === $report->reporter_id
             ? Response::allow()
             : Response::deny('You do not own this report');
     }
