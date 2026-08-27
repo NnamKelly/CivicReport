@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Issue;
 
 return new class extends Migration
 {
@@ -13,6 +14,14 @@ return new class extends Migration
     {
         Schema::create('authorities', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('institution');
+            $table->string('position');  // 'Police Officer', 'Community Leader', 'Security Officer', 'Local Government Official', 'Other Authoruty'
+            $table->string('id_number')->nullable();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
