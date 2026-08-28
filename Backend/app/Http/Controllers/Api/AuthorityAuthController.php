@@ -56,15 +56,14 @@ class AuthorityAuthController extends Controller
 
 
      }
-     public function logout(Request $request)
-     {
-        $request->user()->Tokens()->delete();
+//      public function logout(Request $request)
+//      {
+//         $request->user()->Tokens()->delete();
 
-        return response()->json([
-            'message' => 'You are logged out'
-        ], 200)->setEncodingOptions(JSON_PRETTY_PRINT);
-}
-
+//         return response()->json([
+//             'message' => 'You are logged out'
+//         ], 200)->setEncodingOptions(JSON_PRETTY_PRINT);
+// }
 
 
 }

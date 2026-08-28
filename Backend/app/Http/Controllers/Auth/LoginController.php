@@ -20,7 +20,7 @@ class LoginController extends Controller
         $request->authenticate();
 
         $user = $request->user();
-        $token = $user->createToken("main")->plainTextToken;
+        $token = $user->createToken($request->email)->plainTextToken;
 
         return response()->json([
             'user' => $user,

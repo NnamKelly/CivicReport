@@ -31,12 +31,10 @@ class ReportController extends Controller
         ]);
 
         $validated = $request->validate([
-            'category' => ['required', 'string', '
-                in:infrastructure damage,theft,safety hazard,noise complaint,vandalism,suspiscious activity,other,
-            '],
-            'urgency' => ['required', 'string', '
-                in:low,medium,high,critical,
-            '],
+            'full_name' => ['required', 'string'],
+            'telephone_number' => ['required', 'integer', 'min:9'],
+            'category' => ['required', 'string', 'in:infrastructure damage,theft,safety hazard,noise complaint,vandalism,suspiscious activity,other,'],
+            'urgency' => ['required', 'string', 'in:low,medium,high,critical,'],
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
             'photographic_evidence' => ['nullable', 'image', 'max:5120'],
@@ -47,15 +45,17 @@ class ReportController extends Controller
             $path = $request->file('photographic_evidence')->store('evidence', 'public');
         }
 
-        $report = $request->user()->reports()->create([
+        $report = Report::create([
+            'full_name' => $validated['full_name'],
+            'telephone_number' => $validated['telephone_number'],
             'category' => $validated['category'],
             'urgency' => $validated['urgency'],
             'location' => $validated['location'],
             'description' => $validated['description'],
             'photographic_evidence' => $path,
         ]);
-            $report->reporter_id = $request->user()->id;
-            $report->save();
+            // $report->reporter_id = $request->user()->id;
+            // $report->save();
 
         // return response()->json($report, 201)->setEncodingOptions(JSON_PRETTY_PRINT);
         return new ReportResource($report);
@@ -71,9 +71,9 @@ class ReportController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
+    //  Update the specified resource in storage.
+
     public function update(Request $request, Report $report)
     {
         Gate::authorize('modify', $report);
@@ -85,8 +85,10 @@ class ReportController extends Controller
 
 
         $data = $request->validate([
+            'full_name' => ['required', 'string'],
+            'telephone_number' => ['required', 'integer', 'min:9'],
             'category' => ['required', 'string', 'in:infrastructure damage,theft,safety hazard,noise complaint,vandalism,suspiscious activity,other,'],
-            'urgency' => ['required', 'string', 'in:low,medium,high,critical'],
+            'urgency' => ['required', 'string', 'in:low,medium,high,critical,'],
             'location' => ['required', 'string'],
             'description' => ['required', 'string'],
             'photographic_evidence' => ['nullable', 'image', 'max:5120'],
@@ -103,12 +105,12 @@ class ReportController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+    // Remove the specified resource from storage.
+
     public function destroy(Report $report)
     {
-         Gate::authorize('modify', $report);
+        Gate::authorize('modify', $report);
 
         $report->delete();
 
@@ -116,4 +118,22 @@ class ReportController extends Controller
             'message' => 'The post was deleted'
         ], 204)->setEncodingOptions(JSON_PRETTY_PRINT);
     }
+
+    public function status_update(Request $request, Report $report)
+    {
+        $request->merge([
+            'status' => strtolower($request->status),
+        ]);
+
+        $validated = $request->validate([
+            'status' => ['required', 'string', 'in:pending,under review,reported,resolved,in preogress']
+        ]);
+
+        $data = $report->update($validated);
+        return [
+            'message' => 'status updated successsfull',
+        ];
+    }
+
+
 }

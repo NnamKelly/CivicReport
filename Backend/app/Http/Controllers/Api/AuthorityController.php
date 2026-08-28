@@ -49,4 +49,6 @@ class AuthorityController extends Controller
     {
         //
     }
+
+
 }

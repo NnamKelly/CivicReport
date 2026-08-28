@@ -8,9 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Report extends Model
 {
     protected $fillable =[
+        'telephone_number',
+        'full_name',
         'urgency',
         'category',
         'location',
+        'status',
         'description',
         'photographic_evidence',
     ];
