@@ -22,6 +22,7 @@ class CreateAdmin extends Command
         $name = $this->ask('Admin name');
         $email = $this->ask('Admin email');
         $password = $this->secret('Admin password');
+        $password_comfirmation = $this->secret('Repeat Password');
 
         $validator = Validator::make(['email' => $email], [
             'email' => 'required|email|unique:users,email',
@@ -31,6 +32,10 @@ class CreateAdmin extends Command
             $this->error($validator->errors()->first());
             return 1; // non-zero = command failed
         }
+        if($password !== $password_comfirmation){
+            $this->error('Passwords do not match');
+            return 1;
+        }
 
         User::create([
         'name' => $name,
@@ -39,7 +44,7 @@ class CreateAdmin extends Command
         'role' => 'admin',
     ]);
 
-    $this->info("Admin created: {$name}");
+    $this->info("Admin created: {$email}");
 
     }
 }

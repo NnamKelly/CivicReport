@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class, 'reporter_id')->constrained('users', 'id');
-            $table->foreignIdFor(Authority::class, 'authority_id')->nullable()->constrained('authorities', 'id');
+            // $table->foreignIdFor(User::class, 'reporter_id')->constrained('users', 'id');
+            // $table->foreignIdFor(Authority::class, 'authority_id')->nullable()->constrained('authorities', 'id');
+            $table->string('full_name');
+            $table->string('category'); // 'infrastructure damage', 'safety hazard', 'noise complaint', 'vandalism', 'suspiscious activity'
+            $table->integer('telephone_number');
             $table->string('status')->default('reported'); // 'pending', 'under review', 'reported', 'resolved', 'in preogress'
             $table->string('urgency'); // '
-            $table->string('category'); // 'infrastructure damage', 'safety hazard', 'noise complaint', 'vandalism', 'suspiscious activity'
             $table->string('location');
             $table->text('description');
             $table->text('photographic_evidence')->nullable();

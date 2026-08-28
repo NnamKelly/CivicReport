@@ -61,8 +61,8 @@ class ReportPolicy
      */
     public function modify(User $user, Report $report): Response
     {
-        return $user->id === $report->reporter_id
+        return ($user->id === $report->reporter_id || $user->role === 'admin')
             ? Response::allow()
-            : Response::deny('You do not own this report');
+            : Response::deny('You can not modify this report');
     }
 }
